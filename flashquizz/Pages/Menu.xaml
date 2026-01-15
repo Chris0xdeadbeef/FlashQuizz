@@ -3,10 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="flashquizz.Pages.Menu"
              Title="Menu">
-    <VerticalStackLayout>
+
+    <VerticalStackLayout Padding="20" Spacing="20">
+
         <Label 
             Text="Flashquizz Menu"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            FontSize="28"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            Margin="0,20,0,40" />
+
+        <Button
+            x:Name="DeckGestionBtn"
+            Text="Gérer les decks"
+            Clicked="OnClickedGestionDeck"
+            BackgroundColor="#2A2A2A"
+            TextColor="#FFD700"
+            FontSize="20"
+            HeightRequest="65"
+            WidthRequest="280"
+            CornerRadius="8"
+            BorderColor="#FFD700"
+            BorderWidth="3"
+            HorizontalOptions="Center">
+        <Button.Shadow>
+            <Shadow Brush="#000000" Opacity="0.8" Offset="4,4" Radius="12"/>
+        </Button.Shadow>
+        </Button>
+
+        <Button
+            x:Name="PlayBtn"
+            Text="Jouer"
+            Clicked="OnClickedPlay"
+            BackgroundColor="#3A0000"
+            TextColor="#FFD700"
+            FontSize="20"
+            HeightRequest="65"
+            WidthRequest="280"
+            CornerRadius="8"
+            BorderColor="#FFD700"
+            BorderWidth="3"
+            HorizontalOptions="Center">
+            <Button.Shadow>
+                <Shadow Brush="#000000" Opacity="0.8" Offset="4,4" Radius="12"/>
+            </Button.Shadow>
+        </Button>
+
     </VerticalStackLayout>
 </ContentPage>
