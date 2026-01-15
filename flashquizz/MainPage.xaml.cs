@@ -1,4 +1,5 @@
-﻿namespace flashquizz
+﻿
+namespace flashquizz
 {
     public partial class MainPage : ContentPage
     {
@@ -8,6 +9,13 @@
         {
             InitializeComponent();
         }
+
+
+        private async void OnMenuClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Pages.Menu());
+        }
+
 
         private void OnCounterClicked(object sender, EventArgs e)
         {
