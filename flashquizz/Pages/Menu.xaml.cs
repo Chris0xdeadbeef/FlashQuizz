@@ -1,5 +1,4 @@
-﻿using flashquizz.Pages.Play;
-using Microsoft.Maui.Layouts;
+﻿using Microsoft.Maui.Layouts;
 
 namespace flashquizz.Pages;
 
@@ -76,17 +75,17 @@ public partial class Menu : ContentPage
 
     private async void OnClickedGestionDeck(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new DeckGestion());
+        await Navigation.PushAsync(new Deck.DeckGestion());
     }
 
     private async void OnClickedPlay(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new CardPlay());
+        await Navigation.PushAsync(new Play.DeckChoice());
     }
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        // Vérifie si on peut revenir en arrière
+        // revenir en arrière
         if (Navigation.NavigationStack.Count > 1)
             await Navigation.PopAsync();
     }
