@@ -33,16 +33,14 @@
         <Grid Grid.Row="1">
             <BoxView Color="Black" />
 
-            <Image Source="bgmap.jfif" Aspect="AspectFill" Opacity="0.6"/>
+            <Image Source="bggk1.jfif" Aspect="AspectFill" Opacity="0.6"/>
 
-            <!-- Overlay dégradé en haut seulement -->
+            <!-- overlay dégradé en haut -->
             <BoxView HeightRequest="200" VerticalOptions="Start">
                 <BoxView.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <!-- noir complet en haut -->
                         <GradientStop Color="#FF000000" Offset="0.0" />
-                        <!-- transparent en bas du BoxView -->
-                        <GradientStop Color="#00000000" Offset="1.0" />
+                        <GradientStop Color="Transparent" Offset="1.0" />
                     </LinearGradientBrush>
                 </BoxView.Background>
             </BoxView>
