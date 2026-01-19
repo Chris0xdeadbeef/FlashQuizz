@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="flashquizz.Pages.DeckGestion"
-             Title="DeckGestion">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="flashquizz.Pages.DeckGestion"
+    Title="Gérer les decks"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="80,*">
+
+        <!-- nav custom -->
+        <Grid Grid.Row="0" HeightRequest="80">
+            <Image Source="navd.png" Aspect="AspectFit" HeightRequest="80"/>
+
+            <Label 
+                TextColor="#FFD700"
+                FontSize="24"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+
+            <ImageButton
+                Source="backarrow.png"
+                HeightRequest="100"
+                WidthRequest="100"
+                Margin="15,0"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Clicked="OnBackClicked"/>
+        </Grid>
+
+        <!-- contenu de la page -->
+        <Grid Grid.Row="1">
+            <Image Source="bgmap.jfif" Aspect="AspectFill" />
+            <StackLayout Padding="20" Spacing="20">
+                <Label Text="Page Deck Gestion" 
+                       FontSize="32"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Margin="0,70,0,200"
+                        TextColor="#FFD700"
+                        FontFamily="OrbitronBold"
+                        HorizontalTextAlignment="Center">
+                    <Label.Shadow>
+                        <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
+                    </Label.Shadow>
+                </Label>
+
+            </StackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>
