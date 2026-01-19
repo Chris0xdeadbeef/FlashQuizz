@@ -1,12 +1,69 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="flashquizz.Pages.DeckAdd"
-             Title="DeckAdd">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="flashquizz.Pages.Deck.DeckAdd"
+             Title="DeckAdd"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="80,*">
+
+        <!-- nav custom -->
+        <Grid Grid.Row="0" HeightRequest="80">
+            <BoxView Color="Black" />
+
+            <Image Source="necronnav.gif" 
+                   HeightRequest="80" 
+                   Aspect="AspectFit" 
+                   IsAnimationPlaying="True"/>
+
+            <Label 
+                TextColor="#FFD700"
+                FontSize="24"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+
+            <ImageButton
+                Source="backarrow.png"
+                HeightRequest="100"
+                WidthRequest="100"
+                Margin="15,0"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Clicked="OnBackClicked"/>
+        </Grid>
+
+        <!-- contenu de la page -->
+        <Grid Grid.Row="1">
+            <BoxView Color="Black" />
+
+            <Image Source="necronbg.jfif" Aspect="AspectFill" Opacity="0.6"/>
+
+            <!-- overlay dégradé en haut -->
+            <BoxView HeightRequest="200" VerticalOptions="Start">
+                <BoxView.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#FF000000" Offset="0.0" />
+                        <GradientStop Color="Transparent" Offset="1.0" />
+                    </LinearGradientBrush>
+                </BoxView.Background>
+            </BoxView>
+            
+            <StackLayout Padding="20" Spacing="20">
+                <Label Text="Ajouter un deck" 
+                       FontSize="32"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Margin="0,30,0,200"
+                        TextColor="#FFD700"
+                        FontFamily="OrbitronBold"
+                        HorizontalTextAlignment="Center">
+                    <Label.Shadow>
+                        <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
+                    </Label.Shadow>
+                </Label>
+
+            </StackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>
