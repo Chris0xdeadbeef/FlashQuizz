@@ -2,6 +2,8 @@
     x:Class="flashquizz.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:deck="clr-namespace:flashquizz.Pages.Deck"
+    xmlns:play="clr-namespace:flashquizz.Pages.Play"
     xmlns:pages="clr-namespace:flashquizz.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="flashquizz"
@@ -14,10 +16,14 @@
 
     <ShellContent
         Route="deckGestion"
-        ContentTemplate="{DataTemplate pages:DeckGestion}" />
+        ContentTemplate="{DataTemplate deck:DeckGestion}" />
 
     <ShellContent
-        Route="cardPlay"
-        ContentTemplate="{DataTemplate pages:CardPlay}" />
+        Route="deckChoice"
+        ContentTemplate="{DataTemplate play:DeckChoice}" />
+
+    <ShellContent
+        Route="deckAdd"
+        ContentTemplate="{DataTemplate deck:DeckAdd}" />
 
 </Shell>
