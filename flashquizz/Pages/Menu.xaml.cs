@@ -1,3 +1,5 @@
+using flashquizz.Pages.Play;
+
 namespace flashquizz.Pages;
 
 public partial class Menu : ContentPage
@@ -11,12 +13,11 @@ public partial class Menu : ContentPage
     private async void OnClickedGestionDeck(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new DeckGestion());
-
     }
 
     private async void OnClickedPlay(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("play");
+        await Navigation.PushAsync(new CardPlay());
     }
 
     private async void OnBackClicked(object sender, EventArgs e)

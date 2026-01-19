@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -10,6 +9,7 @@
 
         <!-- nav custom -->
         <Grid Grid.Row="0" HeightRequest="80">
+            <BoxView Color="Black" />
             <Image Source="navd.png" Aspect="AspectFit" HeightRequest="80"/>
 
             <Label 
@@ -31,13 +31,27 @@
 
         <!-- contenu de la page -->
         <Grid Grid.Row="1">
-            <Image Source="bgmap.jfif" Aspect="AspectFill" />
+            <BoxView Color="Black" />       
+        
+            <Image Source="bgmap.jfif" Aspect="AspectFill" Opacity="0.6"/>
+            
+            <!-- Overlay dégradé en haut seulement -->
+            <BoxView HeightRequest="200" VerticalOptions="Start">
+                <BoxView.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <!-- noir complet en haut -->
+                        <GradientStop Color="#FF000000" Offset="0.0" />
+                        <!-- transparent en bas du BoxView -->
+                        <GradientStop Color="#00000000" Offset="1.0" />
+                    </LinearGradientBrush>
+                </BoxView.Background>
+            </BoxView>
             <StackLayout Padding="20" Spacing="20">
-                <Label Text="Page Deck Gestion" 
+                <Label Text="Gérer les decks" 
                        FontSize="32"
                         FontAttributes="Bold"
                         HorizontalOptions="Center"
-                        Margin="0,70,0,200"
+                        Margin="0,30,0,200"
                         TextColor="#FFD700"
                         FontFamily="OrbitronBold"
                         HorizontalTextAlignment="Center">

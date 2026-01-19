@@ -1,4 +1,4 @@
-namespace flashquizz.Pages.Play;
+namespace flashquizz.Pages;
 
 public partial class CardPlay : ContentPage
 {
@@ -6,4 +6,11 @@ public partial class CardPlay : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        // Revenir à la page précédente
+        if (Navigation.NavigationStack.Count > 1)
+            await Navigation.PopAsync();
+    }
 }
