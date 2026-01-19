@@ -8,6 +8,14 @@
     <Grid>
         <Image Source="bgchateau.jfif" Aspect="Fill" Opacity="0.6"/>
 
+        <AbsoluteLayout
+            x:Name="StarsLayer"
+            InputTransparent="True"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill"
+            ZIndex="0"
+            Padding="40"/>
+
         <VerticalStackLayout Padding="20" Spacing="20" HorizontalOptions="Center" VerticalOptions="Center">
             <Button
                 x:Name="DeckGestionBtn"
