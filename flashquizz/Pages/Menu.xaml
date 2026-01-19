@@ -1,53 +1,74 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="flashquizz.Pages.Menu"
-             Title="Menu">
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="flashquizz.Pages.Menu"
+    Title="Menu"
+    NavigationPage.HasNavigationBar="False">
 
-    <VerticalStackLayout Padding="20" Spacing="20">
+    <Grid>
+        <Image Source="bgchateau.jfif" Aspect="Fill" Opacity="0.6"/>
+
+        <VerticalStackLayout Padding="20" Spacing="20" HorizontalOptions="Center" VerticalOptions="Center">
+            <Button
+                x:Name="DeckGestionBtn"
+                Text="Gérer les decks"
+                Clicked="OnClickedGestionDeck"
+                BackgroundColor="#2A2A2A"
+                TextColor="#FFD700"
+                FontSize="20"
+                HeightRequest="65"
+                WidthRequest="280"
+                CornerRadius="8"
+                BorderColor="#FFD700"
+                BorderWidth="3"
+                HorizontalOptions="Center"
+                Opacity="0.8">
+                <Button.Shadow>
+                    <Shadow Brush="#000000" Opacity="0.8" Offset="4,4" Radius="12"/>
+                </Button.Shadow>
+            </Button>
+
+            <Button
+                x:Name="PlayBtn"
+                Text="Jouer"
+                Clicked="OnClickedPlay"
+                BackgroundColor="#3A0000"
+                TextColor="#FFD700"
+                FontSize="20"
+                HeightRequest="65"
+                WidthRequest="280"
+                CornerRadius="8"
+                BorderColor="#FFD700"
+                BorderWidth="3"
+                HorizontalOptions="Center"
+                Opacity="0.8">
+                <Button.Shadow>
+                    <Shadow Brush="#000000" Opacity="0.8" Offset="4,4" Radius="12"/>
+                </Button.Shadow>
+            </Button>
+        </VerticalStackLayout>
+
+        <Image Source="banner.png"
+               Aspect="Fill"
+               WidthRequest="150"
+               Margin="370,20,20,20"
+               ZIndex="2"/>
 
         <Label 
             Text="Flashquizz Menu"
-            FontSize="28"
+            FontSize="32"
             FontAttributes="Bold"
             HorizontalOptions="Center"
-            Margin="0,20,0,40" />
-
-        <Button
-            x:Name="DeckGestionBtn"
-            Text="Gérer les decks"
-            Clicked="OnClickedGestionDeck"
-            BackgroundColor="#2A2A2A"
+            VerticalOptions="Start"
+            Margin="0,70,0,0"
             TextColor="#FFD700"
-            FontSize="20"
-            HeightRequest="65"
-            WidthRequest="280"
-            CornerRadius="8"
-            BorderColor="#FFD700"
-            BorderWidth="3"
-            HorizontalOptions="Center">
-        <Button.Shadow>
-            <Shadow Brush="#000000" Opacity="0.8" Offset="4,4" Radius="12"/>
-        </Button.Shadow>
-        </Button>
+            FontFamily="OrbitronBold"
+            HorizontalTextAlignment="Center"
+            ZIndex="3">
+            <Label.Shadow>
+                <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
+            </Label.Shadow>
+        </Label>
 
-        <Button
-            x:Name="PlayBtn"
-            Text="Jouer"
-            Clicked="OnClickedPlay"
-            BackgroundColor="#3A0000"
-            TextColor="#FFD700"
-            FontSize="20"
-            HeightRequest="65"
-            WidthRequest="280"
-            CornerRadius="8"
-            BorderColor="#FFD700"
-            BorderWidth="3"
-            HorizontalOptions="Center">
-            <Button.Shadow>
-                <Shadow Brush="#000000" Opacity="0.8" Offset="4,4" Radius="12"/>
-            </Button.Shadow>
-        </Button>
-
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
