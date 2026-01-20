@@ -1,13 +1,20 @@
-﻿using Microsoft.Maui.Layouts;
+﻿using flashquizz.Pages.Deck;
+using flashquizz.Pages.Play;
+using Microsoft.Maui.Layouts;
 
 namespace flashquizz.Pages;
 
 public partial class Menu : ContentPage
 {
     private bool _starsCreated;
-    public Menu()
+    private readonly DeckGestion _deckGestion; 
+    private readonly DeckChoice _deckChoice;
+    public Menu(DeckGestion deckGestion, DeckChoice deckChoice)
     {
         InitializeComponent();
+        _deckGestion = deckGestion; 
+        _deckChoice = deckChoice;
+
         SizeChanged += OnSizeChanged;
     }
 
@@ -75,12 +82,12 @@ public partial class Menu : ContentPage
 
     private async void OnClickedGestionDeck(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Deck.DeckGestion());
+        await Navigation.PushAsync(_deckGestion);
     }
 
     private async void OnClickedPlay(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Play.DeckChoice());
+        await Navigation.PushAsync(_deckChoice);
     }
 
     private async void OnBackClicked(object sender, EventArgs e)

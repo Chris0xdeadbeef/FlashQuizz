@@ -1,19 +1,23 @@
 ﻿
+using flashquizz.Pages;
+
 namespace flashquizz
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
+        private readonly Menu _menu;
 
-        public MainPage()
+        public MainPage(Menu menu)
         {
             InitializeComponent();
+            _menu = menu;
         }
 
 
         private async void OnMenuClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Pages.Menu());
+            await Navigation.PushAsync(_menu);
         }
 
 

@@ -63,6 +63,29 @@
                     </Label.Shadow>
                 </Label>
 
+                <Entry x:Name="TitreEntry"
+                   Placeholder="Titre du deck"
+                   TextColor="White"
+                   PlaceholderColor="#AAAAAA"
+                   FontSize="20"
+                   BackgroundColor="#222222"
+                   HeightRequest="50"
+                   Margin="0,0,0,20"                   
+                   />
+
+                <Button Text="Créer le deck"
+                    Clicked="OnCreateDeckClicked"
+                    BackgroundColor="#3A0000"
+                    TextColor="#FFD700"
+                    FontSize="20"
+                    HeightRequest="60"
+                    CornerRadius="8"
+                    BorderColor="#FFD700"
+                    BorderWidth="2"
+                    Opacity="0.8"
+                    />
+
+
             </StackLayout>
         </Grid>
     </Grid>

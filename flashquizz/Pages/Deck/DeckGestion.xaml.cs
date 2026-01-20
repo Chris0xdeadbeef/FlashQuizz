@@ -1,10 +1,20 @@
+using flashquizz.Services;
+using System.Collections.ObjectModel;
+
 namespace flashquizz.Pages.Deck;
 
 public partial class DeckGestion : ContentPage
 {
-    public DeckGestion()
+    private readonly DeckService _deckService;
+    private readonly DeckAdd _deckAdd;
+
+    public DeckGestion(DeckAdd deckAdd, DeckService deckService)
     {
         InitializeComponent();
+        _deckAdd = deckAdd;
+        _deckService = deckService;
+
+        BindingContext = this;
     }
     
     private async void OnBackClicked(object sender, EventArgs e)
@@ -15,6 +25,9 @@ public partial class DeckGestion : ContentPage
     }
     private async void OnClickedAddDeck(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new DeckAdd());
+        await Navigation.PushAsync(_deckAdd);
     }
+    
+    public ObservableCollection<Models.Deck> Decks => _deckService.Decks;
+
 }

@@ -1,13 +1,14 @@
-﻿namespace flashquizz
+﻿using flashquizz.Pages;
+
+namespace flashquizz
 {
     public partial class App : Application
     {
-        public App()
+        public App(Menu menu)
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Pages.Menu());
-
+            MainPage = new NavigationPage(menu);
         }
     }
 }
