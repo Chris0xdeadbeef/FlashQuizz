@@ -14,7 +14,8 @@
             <Image Source="necronnav.gif" 
                    HeightRequest="80" 
                    Aspect="AspectFit" 
-                   IsAnimationPlaying="True"/>
+                   IsAnimationPlaying="True"
+                   Margin="100,0,0,0"/>
 
             <Label 
                 TextColor="#FFD700"
@@ -25,8 +26,8 @@
 
             <ImageButton
                 Source="backarrow.png"
-                HeightRequest="100"
-                WidthRequest="100"
+                HeightRequest="80"
+                WidthRequest="80"
                 Margin="15,0"
                 HorizontalOptions="Start"
                 VerticalOptions="Center"

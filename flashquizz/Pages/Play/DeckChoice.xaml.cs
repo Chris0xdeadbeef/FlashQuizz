@@ -1,9 +1,18 @@
+using flashquizz.Pages.Deck;
+using flashquizz.Services;
+using System.Collections.ObjectModel;
+
 namespace flashquizz.Pages.Play;
 
 public partial class DeckChoice : ContentPage
 {
-	public DeckChoice()
-	{
+    private readonly DeckService _deckService;
+    public DeckChoice(DeckService deckService)
+	{        
+        _deckService = deckService;
+
+        BindingContext = this;
+
         InitializeComponent();
     }
     private async void OnBackClicked(object sender, EventArgs e)
@@ -12,4 +21,5 @@ public partial class DeckChoice : ContentPage
         if (Navigation.NavigationStack.Count > 1)
             await Navigation.PopAsync();
     }
+    public ObservableCollection<Models.Deck> Decks => _deckService.Decks;
 }

@@ -9,12 +9,13 @@ public partial class DeckGestion : ContentPage
     private readonly DeckAdd _deckAdd;
 
     public DeckGestion(DeckAdd deckAdd, DeckService deckService)
-    {
-        InitializeComponent();
+    {        
         _deckAdd = deckAdd;
         _deckService = deckService;
 
         BindingContext = this;
+
+        InitializeComponent();
     }
     
     private async void OnBackClicked(object sender, EventArgs e)
