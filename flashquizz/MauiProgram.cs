@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
 using flashquizz.Services;
 using flashquizz.Pages;
 using flashquizz.Pages.Deck;
@@ -28,11 +27,6 @@ namespace flashquizz
             builder.Services.AddTransient<DeckGestion>();
             builder.Services.AddTransient<DeckAdd>();
             builder.Services.AddTransient<DeckChoice>();
-            builder.Services.AddTransient<MainPage>();
-
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
 
             return builder.Build();
         }

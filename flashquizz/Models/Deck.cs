@@ -4,6 +4,6 @@ namespace flashquizz.Models;
 
 public class Deck
 {
-    public required string Titre { get; set; }
-    public ObservableCollection<Carte> Cartes { get; set; } = [];
+    public required string Title { get; set; }
+    public ObservableCollection<Card> Cards { get; set; } = [];    
 }

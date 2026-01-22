@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:deck="clr-namespace:flashquizz.Pages.Deck"
     xmlns:play="clr-namespace:flashquizz.Pages.Play"
+    xmlns:card="clr-namespace:flashquizz.Pages.Card"
     xmlns:pages="clr-namespace:flashquizz.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="flashquizz"
@@ -25,5 +26,9 @@
     <ShellContent
         Route="deckAdd"
         ContentTemplate="{DataTemplate deck:DeckAdd}" />
+
+    <ShellContent
+        Route="showCard"
+        ContentTemplate="{DataTemplate card:ShowCard}" />
 
 </Shell>

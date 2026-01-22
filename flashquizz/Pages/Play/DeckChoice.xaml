@@ -60,7 +60,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame BackgroundColor="#2A2A2A" BorderColor="#FFD700" CornerRadius="8" Padding="15" Margin="0,5" Opacity="0.85">
-                                <Label Text="{Binding Titre}" TextColor="#FFD700" FontSize="20" FontAttributes="Bold"/>
+                                <Label Text="{Binding Title}" TextColor="#FFD700" FontSize="20" FontAttributes="Bold"/>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

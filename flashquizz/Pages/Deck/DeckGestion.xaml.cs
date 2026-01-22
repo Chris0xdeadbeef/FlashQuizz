@@ -1,3 +1,4 @@
+using flashquizz.Pages.Card;
 using flashquizz.Services;
 using System.Collections.ObjectModel;
 
@@ -7,6 +8,8 @@ public partial class DeckGestion : ContentPage
 {
     private readonly DeckService _deckService;
     private readonly DeckAdd _deckAdd;
+
+    public ObservableCollection<Models.Deck> Decks => _deckService.Decks;
 
     public DeckGestion(DeckAdd deckAdd, DeckService deckService)
     {        
@@ -27,8 +30,19 @@ public partial class DeckGestion : ContentPage
     private async void OnClickedAddDeck(object sender, EventArgs e)
     {
         await Navigation.PushAsync(_deckAdd);
+    }    
+
+    private async void OnDeckSelected(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is Models.Deck selectedDeck)
+        {
+            // Navigation vers la page des cartes
+            await Navigation.PushAsync(new ShowCard(new AddCard(selectedDeck, _deckService), selectedDeck));
+        }
+
+    // Optionnel : désélectionner l’item pour éviter qu’il reste surligné
+    ((CollectionView)sender).SelectedItem = null;
     }
-    
-    public ObservableCollection<Models.Deck> Decks => _deckService.Decks;
+
 
 }

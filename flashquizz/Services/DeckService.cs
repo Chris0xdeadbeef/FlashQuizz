@@ -11,4 +11,8 @@ public class DeckService
     {
         Decks.Add(deck);
     }
+    public void AddCard(Deck deck, Card card)
+    {
+        deck.Cards.Add(card);
+    }
 }

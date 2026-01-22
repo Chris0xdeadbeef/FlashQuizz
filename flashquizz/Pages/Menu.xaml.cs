@@ -12,7 +12,7 @@ public partial class Menu : ContentPage
     public Menu(DeckGestion deckGestion, DeckChoice deckChoice)
     {
         InitializeComponent();
-        _deckGestion = deckGestion; 
+        _deckGestion = deckGestion;
         _deckChoice = deckChoice;
 
         SizeChanged += OnSizeChanged;
@@ -33,13 +33,13 @@ public partial class Menu : ContentPage
 
         for (byte i = 0; i < count; ++i)
         {
-            float size = 0.005f;
+            float size = 0.007f;
 
             BoxView star = new()
             {
                 Color = Colors.White,
-                Opacity = random.NextDouble() * 0.6f + 0.2f,
-                CornerRadius = 50
+                Opacity = random.NextDouble() * 0.3f,
+                CornerRadius = 100
             };
 
             AbsoluteLayout.SetLayoutBounds(star, new Rect(
@@ -56,23 +56,23 @@ public partial class Menu : ContentPage
         }
     }
 
-    private async void AnimateStar(View star)
+    private static async void AnimateStar(View star)
     {
-        var random = new Random();
+        Random random = new();
 
         while (true)
         {
-            // Fade vers 1 (apparition)
-            await star.FadeTo(1, (uint)random.Next(500, 1500), Easing.SinInOut);
+            // Fade vers 1
+            await star.FadeTo(1.0, (uint)random.Next(500, 1500), Easing.SinInOut);
 
-            // Pause courte (optionnel)
+            // Pause courte
             await Task.Delay(random.Next(100, 500));
 
-            // Fade vers 0 (disparition)
-            await star.FadeTo(0, (uint)random.Next(500, 1500), Easing.SinInOut);
+            // Fade vers 0
+            await star.FadeTo(0.0, (uint)random.Next(500, 1500), Easing.SinInOut);
 
             // Nouvelle position aléatoire
-            double size = AbsoluteLayout.GetLayoutBounds(star).Width; // taille proportionnelle conservée
+            double size = AbsoluteLayout.GetLayoutBounds(star).Width;
             double newX = random.NextDouble();
             double newY = random.NextDouble();
 
@@ -88,12 +88,5 @@ public partial class Menu : ContentPage
     private async void OnClickedPlay(object sender, EventArgs e)
     {
         await Navigation.PushAsync(_deckChoice);
-    }
-
-    private async void OnBackClicked(object sender, EventArgs e)
-    {
-        // revenir en arrière
-        if (Navigation.NavigationStack.Count > 1)
-            await Navigation.PopAsync();
     }
 }

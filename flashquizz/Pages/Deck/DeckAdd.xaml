@@ -39,6 +39,7 @@
             <BoxView Color="Black" />
 
             <Image Source="necronbg.jfif" Aspect="AspectFill" Opacity="0.6"/>
+              
 
             <!-- overlay dégradé en haut -->
             <BoxView HeightRequest="200" VerticalOptions="Start">
@@ -53,40 +54,45 @@
             <StackLayout Padding="20" Spacing="20">
                 <Label Text="Ajouter un deck" 
                        FontSize="32"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        Margin="0,30,0,200"
-                        TextColor="#FFD700"
-                        FontFamily="OrbitronBold"
-                        HorizontalTextAlignment="Center">
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Margin="0,30,0,150"
+                       TextColor="#FFD700"
+                       FontFamily="OrbitronBold"
+                       HorizontalTextAlignment="Center">
                     <Label.Shadow>
                         <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
                     </Label.Shadow>
                 </Label>
 
                 <Entry x:Name="TitreEntry"
-                   Placeholder="Titre du deck"
-                   TextColor="White"
-                   PlaceholderColor="#AAAAAA"
-                   FontSize="20"
-                   BackgroundColor="#222222"
-                   HeightRequest="50"
-                   Margin="0,0,0,20"                   
-                   />
+                       Placeholder="Titre du deck"
+                       TextColor="White"
+                       PlaceholderColor="#AAAAAA"
+                       FontSize="20"
+                       BackgroundColor="#222222"
+                       HeightRequest="50"
+                       Margin="0,0,0,100"   
+                       Opacity="0.8"
+                       />
 
                 <Button Text="Créer le deck"
-                    Clicked="OnCreateDeckClicked"
-                    BackgroundColor="#3A0000"
-                    TextColor="#FFD700"
-                    FontSize="20"
-                    HeightRequest="60"
-                    CornerRadius="8"
-                    BorderColor="#FFD700"
-                    BorderWidth="2"
-                    Opacity="0.8"
-                    />
+                        Clicked="OnCreateDeckClicked"
+                        BackgroundColor="#3A0000"
+                        TextColor="#FFD700"
+                        FontSize="20"
+                        HeightRequest="60"
+                        CornerRadius="8"
+                        BorderColor="#FFD700"
+                        BorderWidth="2"
+                        Opacity="0.8"
+                        />
 
-
+                <Image Source="bannerncr.png"
+                       Aspect="AspectFill"
+                       WidthRequest="120"
+                       Margin="-280,-170,20,20"
+                       ZIndex="0"/>
             </StackLayout>
         </Grid>
     </Grid>

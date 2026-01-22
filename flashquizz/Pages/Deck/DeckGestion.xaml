@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="flashquizz.Pages.Deck.DeckGestion"
+    xmlns:models="clr-namespace:flashquizz.Models"
     Title="Gérer les decks"
     NavigationPage.HasNavigationBar="False">
 
@@ -12,9 +13,9 @@
 
             <BoxView Color="Black" />
             <Image Source="navd.png" Aspect="AspectFit" HeightRequest="80"/>
-            <Image Source="orc.gif" 
-                   HeightRequest="80" 
-                   Aspect="AspectFit" 
+            <Image Source="orc.gif"
+                   HeightRequest="80"
+                   Aspect="AspectFit"
                    IsAnimationPlaying="True"
                    Margin="300,0,0,0"/>
 
@@ -65,7 +66,7 @@
                     </Label.Shadow>
                 </Label>
                 <Button
-                    x:Name="DeckGestionBtn"
+                    x:Name="DeckAddBtn"
                     Text="+"
                     Clicked="OnClickedAddDeck"
                     BackgroundColor="#2A2A2A"
@@ -82,12 +83,14 @@
                         <Shadow Brush="#000000" Opacity="0.8" Offset="4,4" Radius="12"/>
                     </Button.Shadow>
                 </Button>
-                
-                <CollectionView ItemsSource="{Binding Decks}" SelectionMode="Multiple">
+
+                <CollectionView ItemsSource="{Binding Decks}"
+                                SelectionMode="Single"
+                                SelectionChanged="OnDeckSelected">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame BackgroundColor="#2A2A2A" BorderColor="#FFD700" CornerRadius="8" Padding="15" Margin="0,5" Opacity="0.85">
-                                <Label Text="{Binding Titre}" TextColor="#FFD700" FontSize="20" FontAttributes="Bold"/>
+                        <DataTemplate x:DataType="models:Deck">
+                            <Frame BackgroundColor="#2A2A2A" BorderColor="#FFD700" CornerRadius="8" Padding="15" Margin="0,5" Opacity="0.85" InputTransparent="True">
+                                <Label Text="{Binding Title}" TextColor="#FFD700" FontSize="20" FontAttributes="Bold"/>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

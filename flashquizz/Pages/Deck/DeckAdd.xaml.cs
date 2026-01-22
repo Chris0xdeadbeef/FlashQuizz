@@ -29,7 +29,7 @@ public partial class DeckAdd : ContentPage
 
         Models.Deck nouveauDeck = new()
         {
-            Titre = titre
+            Title = titre
         };
 
         // Ajout via le service global
