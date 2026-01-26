@@ -38,64 +38,76 @@
 
         <!-- contenu de la page -->
         <Grid Grid.Row="1">
-            <BoxView Color="Black" />       
-        
-            <Image Source="bgmap.jfif" Aspect="AspectFill" Opacity="0.6"/>
+            <BoxView Color="Black" InputTransparent="True"/>
+
+            <Image Source="bgmap.jfif" Aspect="AspectFill" Opacity="0.6" InputTransparent="True"/>
             
             <!-- Overlay dégradé en haut seulement -->
-            <BoxView HeightRequest="200" VerticalOptions="Start">
+            <BoxView HeightRequest="200" VerticalOptions="Start" InputTransparent="True">
                 <BoxView.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <!-- noir complet en haut -->
                         <GradientStop Color="#FF000000" Offset="0.0" />
-                        <!-- transparent en bas du BoxView -->
                         <GradientStop Color="#00000000" Offset="1.0" />
                     </LinearGradientBrush>
                 </BoxView.Background>
             </BoxView>
-            <StackLayout Padding="20" Spacing="20">
+
+            <Grid Padding="20" RowDefinitions="Auto,Auto,*" RowSpacing="20">
                 <Label Text="Gérer les decks" 
                        FontSize="32"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        TextColor="#FFD700"
-                        FontFamily="OrbitronBold"
-                        HorizontalTextAlignment="Center">
-                    <Label.Shadow>
-                        <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
-                    </Label.Shadow>
-                </Label>
-                <Button
-                    x:Name="DeckAddBtn"
-                    Text="+"
-                    Clicked="OnClickedAddDeck"
-                    BackgroundColor="#2A2A2A"
-                    TextColor="#FFD700"
-                    FontSize="20"
-                    HeightRequest="50"
-                    WidthRequest="50"
-                    CornerRadius="80"
-                    BorderColor="#FFD700"
-                    BorderWidth="3"
-                    HorizontalOptions="Center"
-                    Opacity="0.8">
-                    <Button.Shadow>
-                        <Shadow Brush="#000000" Opacity="0.8" Offset="4,4" Radius="12"/>
-                    </Button.Shadow>
-                </Button>
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#FFD700"
+                       HorizontalTextAlignment="Center"/>
 
-                <CollectionView ItemsSource="{Binding Decks}"
+                        <Button x:Name="DeckAddBtn"
+                        Text="+"
+                        Clicked="OnClickedAddDeck"
+                        BackgroundColor="#2A2A2A"
+                        TextColor="#FFD700"
+                        FontSize="20"
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        CornerRadius="80"
+                        BorderColor="#FFD700"
+                        BorderWidth="3"
+                        HorizontalOptions="Center"
+                        Opacity="0.8"/>
+                
+                <CollectionView x:Name="DeckCollection"
+                                Grid.Row="2"
+                                ItemsSource="{Binding Decks}"
                                 SelectionMode="Single"
                                 SelectionChanged="OnDeckSelected">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Deck">
-                            <Frame BackgroundColor="#2A2A2A" BorderColor="#FFD700" CornerRadius="8" Padding="15" Margin="0,5" Opacity="0.85" InputTransparent="True">
-                                <Label Text="{Binding Title}" TextColor="#FFD700" FontSize="20" FontAttributes="Bold"/>
-                            </Frame>
+                            <SwipeView SwipeStarted="OnSwipeStarted" SwipeEnded="OnSwipeEnded">
+                                <SwipeView.RightItems>
+                                    <SwipeItems Mode="Reveal">
+                                        <SwipeItem Text="Supprimer"
+                                       BackgroundColor="#8B0000"
+                                       IconImageSource="trash.png"
+                                       Invoked="OnDeleteDeck"
+                                       CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <Frame BackgroundColor="#2A2A2A"
+                                       BorderColor="#FFD700"
+                                       CornerRadius="8"
+                                       Padding="15"
+                                       Margin="0,5"
+                                       Opacity="0.85">
+                                    <Label Text="{Binding Title}"
+                                           TextColor="#FFD700"
+                                           FontSize="20"
+                                           FontAttributes="Bold"/>
+                                </Frame>
+                            </SwipeView>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </StackLayout>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>

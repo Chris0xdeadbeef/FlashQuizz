@@ -8,6 +8,10 @@ public partial class DeckGestion : ContentPage
 {
     private readonly DeckService _deckService;
     private readonly DeckAdd _deckAdd;
+    public static class DeckNavigation
+    {
+        public static Models.Deck? SelectedDeck { get; set; }
+    }
 
     public ObservableCollection<Models.Deck> Decks => _deckService.Decks;
 
@@ -30,18 +34,64 @@ public partial class DeckGestion : ContentPage
     private async void OnClickedAddDeck(object sender, EventArgs e)
     {
         await Navigation.PushAsync(_deckAdd);
-    }    
+    }
 
     private async void OnDeckSelected(object sender, SelectionChangedEventArgs e)
     {
-        if (e.CurrentSelection.FirstOrDefault() is Models.Deck selectedDeck)
+        // Empêche la navigation si un swipe est en cours
+        if (_isSwiping)
         {
-            // Navigation vers la page des cartes
-            await Navigation.PushAsync(new ShowCard(new AddCard(selectedDeck, _deckService), selectedDeck));
+            ((CollectionView)sender).SelectedItem = null;
+            return;
         }
 
-    // Optionnel : désélectionner l’item pour éviter qu’il reste surligné
+        if (e.CurrentSelection.FirstOrDefault() is Models.Deck selectedDeck)
+        {
+            await Navigation.PushAsync(
+                new ShowCard(
+                    new AddCard(selectedDeck, _deckService),
+                    selectedDeck
+                )
+            );
+        }
+
+    // Désélectionne l’item pour éviter qu’il reste surligné
     ((CollectionView)sender).SelectedItem = null;
+    }
+
+
+    private async void OnDeleteDeck(object sender, EventArgs e)
+    {
+        SwipeItem? swipeItem = sender as SwipeItem;
+        Models.Deck? deck = swipeItem?.CommandParameter as Models.Deck;
+
+        if (deck == null)
+            return;
+
+        bool confirm = await DisplayAlert(
+            "Supprimer le deck",
+            $"Supprimer \"{deck.Title}\" ?",
+            "Oui",
+            "Annuler");
+
+        if (!confirm)
+            return;
+
+        Decks.Remove(deck);
+    }
+
+    private bool _isSwiping = false;
+
+    private void OnSwipeStarted(object sender, SwipeStartedEventArgs e)
+    {
+        _isSwiping = true;
+        DeckCollection.SelectionMode = SelectionMode.None;
+    }
+
+    private void OnSwipeEnded(object sender, SwipeEndedEventArgs e)
+    {
+        _isSwiping = false;
+        DeckCollection.SelectionMode = SelectionMode.Single;
     }
 
 
