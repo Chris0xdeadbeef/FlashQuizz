@@ -66,6 +66,7 @@
                         BackgroundColor="#2A2A2A"
                         TextColor="#FFD700"
                         FontSize="20"
+                        Margin="0,60,0,0"
                         HeightRequest="50"
                         WidthRequest="50"
                         CornerRadius="80"
@@ -85,10 +86,10 @@
                                 <SwipeView.RightItems>
                                     <SwipeItems Mode="Reveal">
                                         <SwipeItem Text="Supprimer"
-                                       BackgroundColor="#8B0000"
-                                       IconImageSource="trash.png"
-                                       Invoked="OnDeleteDeck"
-                                       CommandParameter="{Binding .}" />
+                                                   BackgroundColor="#8B0000"
+                                                   IconImageSource="trash.png"
+                                                   Invoked="OnDeleteDeck"
+                                                   CommandParameter="{Binding .}" />
                                     </SwipeItems>
                                 </SwipeView.RightItems>
 
