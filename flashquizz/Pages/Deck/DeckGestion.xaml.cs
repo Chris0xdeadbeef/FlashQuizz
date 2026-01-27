@@ -15,10 +15,16 @@ public partial class DeckGestion : ContentPage
         public static Models.Deck? SelectedDeck { get; set; }
     }
 
+    /// <summary>
+    /// Liste observable des decks affichés dans la CollectionView.
+    /// </summary>
     public ObservableCollection<Models.Deck> Decks => _deckService.Decks;
 
+    /// <summary>
+    /// Initialise la page de gestion des decks.
+    /// </summary>
     public DeckGestion(DeckAdd deckAdd, DeckService deckService)
-    {        
+    {
         _deckAdd = deckAdd;
         _deckService = deckService;
 
@@ -26,21 +32,29 @@ public partial class DeckGestion : ContentPage
 
         InitializeComponent();
     }
-    
+
+    /// <summary>
+    /// Retourne à la page précédente si possible.
+    /// </summary>
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        // Revenir à la page précédente
         if (Navigation.NavigationStack.Count > 1)
             await Navigation.PopAsync();
     }
+
+    /// <summary>
+    /// Ouvre la page permettant d'ajouter un nouveau deck.
+    /// </summary>
     private async void OnClickedAddDeck(object sender, EventArgs e)
     {
         await Navigation.PushAsync(_deckAdd);
     }
 
+    /// <summary>
+    /// Ouvre la page des cartes du deck sélectionné, sauf si un swipe est en cours.
+    /// </summary>
     private async void OnDeckSelected(object sender, SelectionChangedEventArgs e)
     {
-        // Empêche la navigation si un swipe est en cours
         if (_isSwiping)
         {
             ((CollectionView)sender).SelectedItem = null;
@@ -56,11 +70,13 @@ public partial class DeckGestion : ContentPage
                 )
             );
         }
-
         // Désélectionne l’item pour éviter qu’il reste surligné
         ((CollectionView)sender).SelectedItem = null;
     }
 
+    /// <summary>
+    /// Supprime le deck sélectionné après confirmation de l'utilisateur.
+    /// </summary>
     private async void OnDeleteDeck(object sender, EventArgs e)
     {
         SwipeItem? swipeItem = sender as SwipeItem;
@@ -81,12 +97,18 @@ public partial class DeckGestion : ContentPage
         Decks.Remove(deck);
     }
 
+    /// <summary>
+    /// Désactive la sélection lorsque l'utilisateur commence un swipe.
+    /// </summary>
     private void OnSwipeStarted(object sender, SwipeStartedEventArgs e)
     {
         _isSwiping = true;
         DeckCollection.SelectionMode = SelectionMode.None;
     }
 
+    /// <summary>
+    /// Réactive la sélection lorsque le swipe est terminé.
+    /// </summary>
     private void OnSwipeEnded(object sender, SwipeEndedEventArgs e)
     {
         _isSwiping = false;
