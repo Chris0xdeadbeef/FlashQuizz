@@ -3,6 +3,7 @@ using flashquizz.Services;
 using flashquizz.Pages;
 using flashquizz.Pages.Deck;
 using flashquizz.Pages.Play;
+using flashquizz.Pages.Card;
 
 namespace flashquizz
 {
@@ -27,6 +28,8 @@ namespace flashquizz
             builder.Services.AddTransient<DeckGestion>();
             builder.Services.AddTransient<DeckAdd>();
             builder.Services.AddTransient<DeckChoice>();
+            builder.Services.AddTransient<AddCard>();
+            builder.Services.AddTransient<ShowCard>();
 
             return builder.Build();
         }

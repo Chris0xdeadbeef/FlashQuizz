@@ -45,14 +45,13 @@
             <BoxView HeightRequest="200" VerticalOptions="Start">
                 <BoxView.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <!-- noir complet en haut -->
                         <GradientStop Color="#FF000000" Offset="0.0" />
-                        <!-- transparent en bas du BoxView -->
                         <GradientStop Color="#00000000" Offset="1.0" />
                     </LinearGradientBrush>
                 </BoxView.Background>
             </BoxView>
-            <StackLayout Padding="20" Spacing="20">
+
+            <Grid Padding="20" RowDefinitions="Auto,Auto,*" RowSpacing="20">
                 <Label Text="{Binding Title}"
                      FontSize="32"
                      FontAttributes="Bold"
@@ -65,6 +64,7 @@
                         <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
                     </Label.Shadow>
                 </Label>
+
                 <Button
                      x:Name="CardAddBtn"
                      Text="+"
@@ -74,6 +74,7 @@
                      FontSize="20"
                      HeightRequest="50"
                      WidthRequest="50"
+                     Margin="0,60,0,0"
                      CornerRadius="80"
                      BorderColor="#FFD700"
                      BorderWidth="3"
@@ -84,16 +85,40 @@
                     </Button.Shadow>
                 </Button>
 
-                <CollectionView ItemsSource="{Binding Cards}" SelectionMode="Single">
+                <CollectionView  x:Name="CardCollection" 
+                                 Grid.Row="2"
+                                 ItemsSource="{Binding Cards}" 
+                                 SelectionMode="Single"
+                                 SelectionChanged="OnCardSelected">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Card">
-                            <Frame BackgroundColor="#2A2A2A" BorderColor="#FFD700" CornerRadius="8" Padding="15" Margin="0,5" Opacity="0.85" InputTransparent="true">
-                                <Label Text="{Binding Question}" TextColor="#FFD700" FontSize="20" FontAttributes="Bold"/>
-                            </Frame>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems Mode="Reveal">
+                                        <SwipeItem Text="Supprimer"
+                                                   BackgroundColor="#8B0000"
+                                                   IconImageSource="trash.png"
+                                                   Invoked="OnDeleteCard"
+                                                   CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <Frame BackgroundColor="#2A2A2A"
+                                       BorderColor="#FFD700"
+                                       CornerRadius="8"
+                                       Padding="15"
+                                       Margin="0,5"
+                                       Opacity="0.85">
+                                    <Label Text="{Binding Question}"
+                                           TextColor="#FFD700"
+                                           FontSize="20"
+                                           FontAttributes="Bold"/>
+                                </Frame>
+                            </SwipeView>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </StackLayout>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>
