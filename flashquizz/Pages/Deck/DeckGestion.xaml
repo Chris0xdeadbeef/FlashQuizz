@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="flashquizz.Pages.Deck.DeckGestion"
     xmlns:models="clr-namespace:flashquizz.Models"
-    Title="Gérer les decks"
     NavigationPage.HasNavigationBar="False">
 
     <Grid RowDefinitions="80,*">
@@ -60,7 +59,7 @@
                        TextColor="#FFD700"
                        HorizontalTextAlignment="Center"/>
 
-                        <Button x:Name="DeckAddBtn"
+                <Button x:Name="DeckAddBtn"
                         Text="+"
                         Clicked="OnClickedAddDeck"
                         BackgroundColor="#2A2A2A"

@@ -8,6 +8,8 @@ public partial class DeckGestion : ContentPage
 {
     private readonly DeckService _deckService;
     private readonly DeckAdd _deckAdd;
+    private bool _isSwiping = false;
+
     public static class DeckNavigation
     {
         public static Models.Deck? SelectedDeck { get; set; }
@@ -55,10 +57,9 @@ public partial class DeckGestion : ContentPage
             );
         }
 
-    // Désélectionne l’item pour éviter qu’il reste surligné
-    ((CollectionView)sender).SelectedItem = null;
+        // Désélectionne l’item pour éviter qu’il reste surligné
+        ((CollectionView)sender).SelectedItem = null;
     }
-
 
     private async void OnDeleteDeck(object sender, EventArgs e)
     {
@@ -70,7 +71,7 @@ public partial class DeckGestion : ContentPage
 
         bool confirm = await DisplayAlert(
             "Supprimer le deck",
-            $"Supprimer \"{deck.Title}\" ?",
+            $"Supprimer {deck.Title} ?",
             "Oui",
             "Annuler");
 
@@ -79,8 +80,6 @@ public partial class DeckGestion : ContentPage
 
         Decks.Remove(deck);
     }
-
-    private bool _isSwiping = false;
 
     private void OnSwipeStarted(object sender, SwipeStartedEventArgs e)
     {
@@ -93,6 +92,4 @@ public partial class DeckGestion : ContentPage
         _isSwiping = false;
         DeckCollection.SelectionMode = SelectionMode.Single;
     }
-
-
 }
