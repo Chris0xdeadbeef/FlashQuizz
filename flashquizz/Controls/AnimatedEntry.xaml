@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="flashquizz.Controls.AnimatedEntry"
-             Title="AnimatedEntry">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             x:Name="This">
+
+    <VerticalStackLayout Spacing="0">
+
+        <Entry x:Name="InnerEntry"
+               Text="{Binding Text, Source={x:Reference This}}"
+               Placeholder="{Binding Placeholder, Source={x:Reference This}}"
+               TextColor="White"
+               BackgroundColor="Transparent"
+               FontSize="20"
+               PlaceholderColor="#AAAAAA"
+               Focused="OnFocused"
+               Unfocused="OnUnfocused"/>
+
+        <BoxView x:Name="Underline"
+                 HeightRequest="2"
+                 BackgroundColor="#FFD700"
+                 WidthRequest="100"/>
     </VerticalStackLayout>
-</ContentPage>
+</ContentView>
+
