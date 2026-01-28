@@ -19,6 +19,8 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		
+		<EnableUnsupportedOSPlatformWarning>false</EnableUnsupportedOSPlatformWarning>
 
 		<!-- Display name -->
 		<ApplicationTitle>flashquizz</ApplicationTitle>
@@ -43,7 +45,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.jpg" Color="#000000" BaseSize="640,960" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -55,7 +57,7 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.14" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
