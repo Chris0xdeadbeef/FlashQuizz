@@ -48,4 +48,8 @@ public partial class DeckAdd : ContentPage
         // Retour à la page précédente
         await Navigation.PopAsync();
     }
+    private void OnBackgroundTapped(object sender, TappedEventArgs e)
+    {
+        TitreEntry.EntryControl.Unfocus();
+    }
 }
