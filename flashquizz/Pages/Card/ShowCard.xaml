@@ -92,7 +92,7 @@
                                  SelectionChanged="OnCardSelected">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Card">
-                            <SwipeView>
+                            <SwipeView SwipeStarted="OnSwipeStarted" SwipeEnded="OnSwipeEnded">
                                 <SwipeView.RightItems>
                                     <SwipeItems Mode="Reveal">
                                         <SwipeItem Text="Supprimer"
@@ -108,7 +108,9 @@
                                        CornerRadius="8"
                                        Padding="15"
                                        Margin="0,5"
-                                       Opacity="0.85">
+                                       Opacity="0.85"
+                                       InputTransparent="True">
+
                                     <Label Text="{Binding Question}"
                                            TextColor="#FFD700"
                                            FontSize="20"

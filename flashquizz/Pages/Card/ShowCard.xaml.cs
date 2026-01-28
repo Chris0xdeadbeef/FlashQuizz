@@ -1,9 +1,11 @@
+using flashquizz.Services;
+
 namespace flashquizz.Pages.Card;
 
 public partial class ShowCard : ContentPage
 {
     private readonly Models.Deck _deck;
-    private readonly AddCard _cardAdd;
+    private readonly DeckService _deckService;
     private bool _isSwiping = false;
 
     /// <summary>
@@ -11,12 +13,26 @@ public partial class ShowCard : ContentPage
     /// </summary>
     public ShowCard(AddCard addCard, Models.Deck deck)
     {
-        _cardAdd = addCard;
+        // On récupère le service depuis addCard
+        _deckService = addCard.GetType()
+                              .GetField("_deckService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                              ?.GetValue(addCard) as DeckService
+                              ?? throw new Exception("DeckService introuvable");
+
         _deck = deck;
 
         BindingContext = _deck;
 
         InitializeComponent();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Force le rafraîchissement de la liste
+        CardCollection.ItemsSource = null;
+        CardCollection.ItemsSource = _deck.Cards;
     }
 
     /// <summary>
@@ -33,7 +49,7 @@ public partial class ShowCard : ContentPage
     /// </summary>
     private async void OnClickedAddCard(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(_cardAdd);
+        await Navigation.PushAsync(new AddCard(_deck, _deckService));
     }
 
     /// <summary>
@@ -43,6 +59,7 @@ public partial class ShowCard : ContentPage
     {
         _isSwiping = true;
         CardCollection.SelectionMode = SelectionMode.None;
+        CardCollection.SelectedItem = null;
     }
 
     /// <summary>
@@ -56,6 +73,7 @@ public partial class ShowCard : ContentPage
 
     /// <summary>
     /// Gère la sélection d'une carte, sauf si un swipe est en cours.
+    /// Ouvre la page AddCard en mode modification.
     /// </summary>
     private async void OnCardSelected(object sender, SelectionChangedEventArgs e)
     {
@@ -67,17 +85,22 @@ public partial class ShowCard : ContentPage
 
         if (e.CurrentSelection.FirstOrDefault() is Models.Card selectedCard)
         {
-            //TODO Aller sur la page modifier card
+            await Navigation.PushAsync(
+                new AddCard(_deck, _deckService, selectedCard)
+            );
         }
 
         ((CollectionView)sender).SelectedItem = null;
     }
+
 
     /// <summary>
     /// Supprime la carte sélectionnée après confirmation de l'utilisateur.
     /// </summary>
     private async void OnDeleteCard(object sender, EventArgs e)
     {
+        CardCollection.SelectedItem = null;
+
         SwipeItem? swipeItem = sender as SwipeItem;
         Models.Card? card = swipeItem?.CommandParameter as Models.Card;
 
