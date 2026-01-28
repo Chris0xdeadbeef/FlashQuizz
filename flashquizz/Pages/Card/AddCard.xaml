@@ -34,10 +34,15 @@
 
         <!-- contenu de la page -->
         <Grid Grid.Row="1">
+
+            <!-- permet de defocus quand on clique ailleurs -->
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBackgroundTapped"/>
+            </Grid.GestureRecognizers>
+
             <BoxView Color="Black" />
 
             <Image Source="necronbg.jfif" Aspect="AspectFill" Opacity="0.6"/>
-
 
             <!-- overlay dégradé en haut -->
             <BoxView HeightRequest="200" VerticalOptions="Start">
@@ -50,41 +55,57 @@
             </BoxView>
 
             <StackLayout Padding="20" Spacing="20">
-                <Label Text="Ajouter une carte" 
+
+                <Label x:Name="TitleLabel"
+                       Text="Ajouter une carte"
                        FontSize="32"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        Margin="0,30,0,100"
-                        TextColor="#FFD700"
-                        FontFamily="OrbitronBold"
-                        HorizontalTextAlignment="Center">
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Margin="0,30,0,80"
+                       TextColor="#FFD700"
+                       FontFamily="OrbitronBold"
+                       HorizontalTextAlignment="Center">
                     <Label.Shadow>
                         <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
                     </Label.Shadow>
                 </Label>
 
-                <Entry x:Name="QuestionEntry"
-                       Placeholder="Question"
-                       TextColor="White"
-                       PlaceholderColor="#AAAAAA"
-                       FontSize="20"
-                       BackgroundColor="#222222"
-                       HeightRequest="50"
-                       Margin="0,0,0,20"   
-                       Opacity="0.8"
-                       />
-                <Entry x:Name="AnswerEntry"
-                       Placeholder="Réponse"
-                       TextColor="White"
-                       PlaceholderColor="#AAAAAA"
-                       FontSize="20"
-                       BackgroundColor="#222222"
-                       HeightRequest="50"
-                       Margin="0,0,0,80"   
-                       Opacity="0.8"
-                       />
+                <!-- Champ Question -->
+                <Border StrokeThickness="0" Margin="0,0,0,10">
+                    <VerticalStackLayout>
+                        <Entry x:Name="QuestionEntry"
+                               Placeholder="Question"
+                               TextColor="White"
+                               BackgroundColor="Transparent"
+                               FontSize="20"
+                               Focused="OnEntryFocused"
+                               Unfocused="OnEntryUnfocused"/>
+                        <BoxView x:Name="QuestionUnderline"
+                                 HeightRequest="2"
+                                 BackgroundColor="#FFD700"
+                                 WidthRequest="100"/>
+                    </VerticalStackLayout>
+                </Border>
 
-                <Button Text="Créer une carte"
+                <!-- Champ Réponse -->
+                <Border StrokeThickness="0" Margin="0,0,0,40">
+                    <VerticalStackLayout>
+                        <Entry x:Name="AnswerEntry"
+                               Placeholder="Réponse"
+                               TextColor="White"
+                               BackgroundColor="Transparent"
+                               FontSize="20"
+                               Focused="OnEntryFocused"
+                               Unfocused="OnEntryUnfocused"/>
+                        <BoxView x:Name="AnswerUnderline"
+                                 HeightRequest="2"
+                                 BackgroundColor="#FFD700"
+                                 WidthRequest="100"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button x:Name="CreateButton"
+                        Text="Créer une carte"
                         Clicked="OnCreateCardClicked"
                         BackgroundColor="#3A0000"
                         TextColor="#FFD700"
@@ -93,8 +114,20 @@
                         CornerRadius="8"
                         BorderColor="#FFD700"
                         BorderWidth="2"
+                        Opacity="0.8"/>
+
+                <Button x:Name="EditButton"
+                        Text="Modifier la carte"
+                        Clicked="OnEditCardClicked"
+                        BackgroundColor="#004400"
+                        TextColor="#FFD700"
+                        FontSize="20"
+                        HeightRequest="60"
+                        CornerRadius="8"
+                        BorderColor="#FFD700"
+                        BorderWidth="2"
                         Opacity="0.8"
-                        />
+                        IsVisible="False"/>
 
                 <Image Source="bannerncr.png"
                        Aspect="AspectFill"
