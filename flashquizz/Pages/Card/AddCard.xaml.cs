@@ -36,8 +36,8 @@ public partial class AddCard : ContentPage
         InitializeComponent();
 
         // Pré-remplir les champs
-        QuestionEntry.Text = cardToEdit.Question;
-        AnswerEntry.Text = cardToEdit.Answer;
+        QuestionInput.Text = cardToEdit.Question;
+        AnswerInput.Text = cardToEdit.Answer;
 
         // Mode édition
         CreateButton.IsVisible = false;
@@ -56,8 +56,8 @@ public partial class AddCard : ContentPage
     /// </summary>
     private async void OnCreateCardClicked(object sender, EventArgs e)
     {
-        string question = QuestionEntry.Text?.Trim() ?? "";
-        string answer = AnswerEntry.Text?.Trim() ?? "";
+        string question = QuestionInput.Text?.Trim() ?? "";
+        string answer = AnswerInput.Text?.Trim() ?? "";
 
         if (string.IsNullOrWhiteSpace(question) || string.IsNullOrWhiteSpace(answer))
         {
@@ -84,8 +84,8 @@ public partial class AddCard : ContentPage
         if (_editingCard == null)
             return;
 
-        string question = QuestionEntry.Text?.Trim() ?? "";
-        string answer = AnswerEntry.Text?.Trim() ?? "";
+        string question = QuestionInput.Text?.Trim() ?? "";
+        string answer = AnswerInput.Text?.Trim() ?? "";
 
         if (string.IsNullOrWhiteSpace(question) || string.IsNullOrWhiteSpace(answer))
         {
@@ -98,35 +98,10 @@ public partial class AddCard : ContentPage
 
         await Navigation.PopAsync();
     }
-    private void AnimateWidth(BoxView target, double from, double to)
-    {
-        var animation = new Animation(v =>
-        {
-            target.WidthRequest = v;
-        }, from, to);
-
-        animation.Commit(this, "UnderlineAnimation", 16, 250, Easing.CubicOut);
-    }
-
-    private void OnEntryFocused(object sender, FocusEventArgs e)
-    {
-        if (sender == QuestionEntry)
-            AnimateWidth(QuestionUnderline, QuestionUnderline.WidthRequest, 300);
-        else if (sender == AnswerEntry)
-            AnimateWidth(AnswerUnderline, AnswerUnderline.WidthRequest, 300);
-    }
-
-    private void OnEntryUnfocused(object sender, FocusEventArgs e)
-    {
-        if (sender == QuestionEntry)
-            AnimateWidth(QuestionUnderline, QuestionUnderline.WidthRequest, 100);
-        else if (sender == AnswerEntry)
-            AnimateWidth(AnswerUnderline, AnswerUnderline.WidthRequest, 100);
-    }
     private void OnBackgroundTapped(object sender, TappedEventArgs e)
     {
-        // Enlève le focus des champs
-        QuestionEntry.Unfocus();
-        AnswerEntry.Unfocus();
+        QuestionInput.EntryControl.Unfocus();
+        AnswerInput.EntryControl.Unfocus();
     }
+
 }

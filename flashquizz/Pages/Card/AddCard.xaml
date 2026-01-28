@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="flashquizz.Pages.Card.AddCard"
+             xmlns:controls="clr-namespace:flashquizz.Controls"
              NavigationPage.HasNavigationBar="False">
 
     <Grid RowDefinitions="80,*">
@@ -34,8 +35,6 @@
 
         <!-- contenu de la page -->
         <Grid Grid.Row="1">
-
-            <!-- permet de defocus quand on clique ailleurs -->
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnBackgroundTapped"/>
             </Grid.GestureRecognizers>
@@ -70,39 +69,8 @@
                     </Label.Shadow>
                 </Label>
 
-                <!-- Champ Question -->
-                <Border StrokeThickness="0" Margin="0,0,0,10">
-                    <VerticalStackLayout>
-                        <Entry x:Name="QuestionEntry"
-                               Placeholder="Question"
-                               TextColor="White"
-                               BackgroundColor="Transparent"
-                               FontSize="20"
-                               Focused="OnEntryFocused"
-                               Unfocused="OnEntryUnfocused"/>
-                        <BoxView x:Name="QuestionUnderline"
-                                 HeightRequest="2"
-                                 BackgroundColor="#FFD700"
-                                 WidthRequest="100"/>
-                    </VerticalStackLayout>
-                </Border>
-
-                <!-- Champ Réponse -->
-                <Border StrokeThickness="0" Margin="0,0,0,40">
-                    <VerticalStackLayout>
-                        <Entry x:Name="AnswerEntry"
-                               Placeholder="Réponse"
-                               TextColor="White"
-                               BackgroundColor="Transparent"
-                               FontSize="20"
-                               Focused="OnEntryFocused"
-                               Unfocused="OnEntryUnfocused"/>
-                        <BoxView x:Name="AnswerUnderline"
-                                 HeightRequest="2"
-                                 BackgroundColor="#FFD700"
-                                 WidthRequest="100"/>
-                    </VerticalStackLayout>
-                </Border>
+                <controls:AnimatedEntry x:Name="QuestionInput" Placeholder="Question"/>
+                <controls:AnimatedEntry x:Name="AnswerInput" Placeholder="Réponse" Margin="0,0,0,90"/>
 
                 <Button x:Name="CreateButton"
                         Text="Créer une carte"
