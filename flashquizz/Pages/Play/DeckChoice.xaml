@@ -43,14 +43,15 @@
                     </LinearGradientBrush>
                 </BoxView.Background>
             </BoxView>
-            <StackLayout Padding="20" Spacing="20">
+            
+            <Grid Padding="20" RowDefinitions="Auto,Auto,*" RowSpacing="20">
                 <Label Text="Choix du deck" 
                        FontSize="32"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        TextColor="#FFD700"
-                        FontFamily="OrbitronBold"
-                        HorizontalTextAlignment="Center">
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#FFD700"
+                       FontFamily="OrbitronBold"
+                       HorizontalTextAlignment="Center">
                     <Label.Shadow>
                         <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
                     </Label.Shadow>
@@ -65,7 +66,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </StackLayout>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>

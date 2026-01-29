@@ -11,24 +11,39 @@
     Shell.NavBarIsVisible="False">
 
     <!-- pages du shell -->
+    <!-- /Pages -->
     <ShellContent
         Route="menu"
         ContentTemplate="{DataTemplate pages:Menu}" />
 
+    <!-- /Pages/Deck -->
     <ShellContent
         Route="deckGestion"
         ContentTemplate="{DataTemplate deck:DeckGestion}" />
 
     <ShellContent
-        Route="deckChoice"
-        ContentTemplate="{DataTemplate play:DeckChoice}" />
-
-    <ShellContent
         Route="deckAdd"
         ContentTemplate="{DataTemplate deck:DeckAdd}" />
 
+    <!-- /Pages/Card -->
     <ShellContent
         Route="showCard"
         ContentTemplate="{DataTemplate card:ShowCard}" />
 
+    <ShellContent
+        Route="addCard"
+        ContentTemplate="{DataTemplate card:AddCard}" />
+
+    <!-- /Pages/Play -->
+    <ShellContent
+        Route="deckChoice"
+        ContentTemplate="{DataTemplate play:DeckChoice}" />
+
+    <ShellContent
+        Route="cardPlay"
+        ContentTemplate="{DataTemplate play:CardPlay}" />
+    
+    <ShellContent
+        Route="endGameStats"
+        ContentTemplate="{DataTemplate play:EndGameStats}" />
 </Shell>

@@ -30,6 +30,8 @@ namespace flashquizz
             builder.Services.AddTransient<DeckChoice>();
             builder.Services.AddTransient<AddCard>();
             builder.Services.AddTransient<ShowCard>();
+            builder.Services.AddTransient<CardPlay>();
+            builder.Services.AddTransient<EndGameStats>();
 
             return builder.Build();
         }

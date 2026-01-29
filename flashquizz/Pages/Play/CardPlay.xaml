@@ -1,7 +1,7 @@
 <ContentPage 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="flashquizz.Pages.CardPlay"
+    x:Class="flashquizz.Pages.Play.CardPlay"
     Title="Jouer"
     NavigationPage.HasNavigationBar="False">
 
@@ -44,6 +44,7 @@
                     </LinearGradientBrush>
                 </BoxView.Background>
             </BoxView>
+            
             <StackLayout Padding="20" Spacing="20">
                 <Label Text="Jouer" 
                        FontSize="32"

@@ -1,4 +1,4 @@
-namespace flashquizz.Pages;
+namespace flashquizz.Pages.Play;
 
 public partial class CardPlay : ContentPage
 {
