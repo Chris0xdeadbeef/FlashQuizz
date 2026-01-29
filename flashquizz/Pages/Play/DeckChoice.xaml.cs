@@ -1,3 +1,4 @@
+using flashquizz.Pages.Card;
 using flashquizz.Services;
 using System.Collections.ObjectModel;
 
@@ -31,5 +32,18 @@ public partial class DeckChoice : ContentPage
     {
         if (Navigation.NavigationStack.Count > 1)
             await Navigation.PopAsync();
+    }
+
+    /// <summary>
+    /// Ouvre la page pour jouer le deck sélectionné
+    /// </summary>
+    private async void OnDeckSelected(object sender, SelectionChangedEventArgs e)
+    {      
+        if (e.CurrentSelection.Count > 0 && e.CurrentSelection[0] is Models.Deck selectedDeck)
+        {
+            await Navigation.PushAsync(new CardPlay(selectedDeck));
+        }
+        // Désélectionne l’item pour éviter qu’il reste surligné
+        ((CollectionView)sender).SelectedItem = null;
     }
 }

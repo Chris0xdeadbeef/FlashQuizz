@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="flashquizz.Pages.Play.CardPlay"
+    xmlns:models="clr-namespace:flashquizz.Models"
     Title="Jouer"
     NavigationPage.HasNavigationBar="False">
 
@@ -46,7 +47,7 @@
             </BoxView>
             
             <StackLayout Padding="20" Spacing="20">
-                <Label Text="Jouer" 
+                <Label Text="{Binding Title}" 
                        FontSize="32"
                         FontAttributes="Bold"
                         HorizontalOptions="Center"

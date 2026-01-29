@@ -8,7 +8,8 @@ namespace flashquizz
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(menu);
+            MainPage = new SplashScreen(menu);
         }
     }
+
 }
