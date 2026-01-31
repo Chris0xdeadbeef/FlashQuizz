@@ -47,7 +47,7 @@
             <!-- layout principal -->
             <Grid Padding="20" RowDefinitions="Auto,Auto,*" RowSpacing="20">
                 <Label Grid.Row="0"
-                       Text="{Binding Title}"
+                       Text="Choix deck"
                        FontSize="32"
                        FontAttributes="Bold"
                        HorizontalOptions="Center"
