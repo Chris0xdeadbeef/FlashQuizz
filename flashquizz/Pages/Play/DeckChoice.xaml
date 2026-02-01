@@ -68,10 +68,46 @@
                                    Margin="0,5"
                                    Opacity="0.85"
                                    InputTransparent="True">
-                                <Label Text="{Binding Title}"
-                                       TextColor="#FFD700"
-                                       FontSize="20"
-                                       FontAttributes="Bold"/>
+
+                                <VerticalStackLayout Spacing="2">
+
+                                    <!-- Titre -->
+                                    <Label Text="{Binding Title}"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label"
+                                                         Binding="{Binding IsEmpty}"
+                                                         Value="True">
+                                                <Setter Property="TextColor" Value="Gray"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label"
+                                                         Binding="{Binding IsEmpty}"
+                                                         Value="False">
+                                                <Setter Property="TextColor" Value="#FFD700"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                    <!-- NbCards -->
+                                    <Label Text="{Binding NbCards}"
+                                           FontSize="13"
+                                           HorizontalTextAlignment="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label"
+                                                         Binding="{Binding IsEmpty}"
+                                                         Value="True">
+                                                <Setter Property="TextColor" Value="Gray"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label"
+                                                         Binding="{Binding IsEmpty}"
+                                                         Value="False">
+                                                <Setter Property="TextColor" Value="#FFD700"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </VerticalStackLayout>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

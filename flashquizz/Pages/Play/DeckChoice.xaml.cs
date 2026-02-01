@@ -1,5 +1,4 @@
-using flashquizz.Pages.Card;
-using flashquizz.Services;
+ï»¿using flashquizz.Services;
 using System.Collections.ObjectModel;
 
 namespace flashquizz.Pages.Play;
@@ -11,7 +10,8 @@ public partial class DeckChoice : ContentPage
     /// <summary>
     /// Liste observable des decks disponibles pour le mode "Play".
     /// </summary>
-    public ObservableCollection<Models.Deck> Decks => _deckService.Decks;
+    public ObservableCollection<Models.Deck> Decks => _deckService.Decks;   
+
 
     /// <summary>
     /// Initialise la page permettant de choisir un deck pour jouer.
@@ -26,7 +26,7 @@ public partial class DeckChoice : ContentPage
     }
 
     /// <summary>
-    /// Retourne à la page précédente si possible.
+    /// Retourne Ã  la page prÃ©cÃ©dente si possible.
     /// </summary>
     private async void OnBackClicked(object sender, EventArgs e)
     {
@@ -35,15 +35,23 @@ public partial class DeckChoice : ContentPage
     }
 
     /// <summary>
-    /// Ouvre la page pour jouer le deck sélectionné
+    /// Ouvre la page pour jouer le deck sÃ©lectionnÃ©
     /// </summary>
-    private async void OnDeckSelected(object sender, SelectionChangedEventArgs e)
-    {      
-        if (e.CurrentSelection.Count > 0 && e.CurrentSelection[0] is Models.Deck selectedDeck)
+    private void OnDeckSelected(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is Models.Deck deck)
         {
-            await Navigation.PushAsync(new CardPlay(selectedDeck));
+            // deck vide â†’ on annule la sÃ©lection et on ne fait rien
+            if (deck.Cards.Count == 0)
+            {
+                ((CollectionView)sender).SelectedItem = null;
+                return;
+            }
+
+            // deck valide â†’ navigation
+            Navigation.PushAsync(new CardPlay(deck));
         }
-        // Désélectionne l’item pour éviter qu’il reste surligné
         ((CollectionView)sender).SelectedItem = null;
     }
+
 }
