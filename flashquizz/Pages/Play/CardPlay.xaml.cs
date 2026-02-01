@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace flashquizz.Pages.Play;
 
@@ -39,22 +39,54 @@ public partial class CardPlay : ContentPage
             await Navigation.PopAsync();
     }
 
+    private bool _isAnimating = false;
+
     private async void OnCardTapped(object sender, TappedEventArgs e)
     {
-        await CardContainer.RotateYTo(90, 150, Easing.CubicIn);
+        if (_isAnimating) return;
+        _isAnimating = true;
+        CardContainer.AnchorX = 0; // flip autour du côté gauche
+        CardContainer.AnchorY = 0; // flip autour du coin supérieur
+        await CardContainer.RotateYTo(90, 200, Easing.SinIn);
+        // Première moitié du flip
+        await Task.WhenAll(
+            CardContainer.RotateYTo(90, 200, Easing.SinIn),
+            CardContainer.ScaleTo(0.97, 200, Easing.SinIn),
+            CardContainer.FadeTo(0.85, 200, Easing.SinIn)
+        );
 
-        CardText.Text = _showingQuestion ? _currentCard?.Answer : _currentCard?.Question;
+        // Changement du contenu au "dos"
+        if (_showingQuestion)
+        {
+            CardText.Text = _currentCard?.Answer;
+            CardImage.Source = "card2.jpg";
+        }
+        else
+        {
+            CardText.Text = _currentCard?.Question;
+            CardImage.Source = "card1.jpg";
+        }
+
         _showingQuestion = !_showingQuestion;
 
-        await CardContainer.RotateYTo(0, 150, Easing.CubicOut);
+        // Deuxième moitié du flip
+        await Task.WhenAll(
+            CardContainer.RotateYTo(0, 220, Easing.SinOut),
+            CardContainer.ScaleTo(1, 220, Easing.SinOut),
+            CardContainer.FadeTo(1, 220, Easing.SinOut)
+        );
+
+        _isAnimating = false;
     }
+
+
 
     private void LoadNextCard()
     {
         if (_currentIndex >= _remainingCards.Count)
         {
-            DisplayAlert("Termin�",
-                $"R�ussi : {SuccessCount}\nRat� : {FailCount}",
+            DisplayAlert("Terminé",
+                $"Réussi : {SuccessCount}\nRaté : {FailCount}",
                 "OK");
 
             Navigation.PopAsync();
@@ -100,7 +132,7 @@ public partial class CardPlay : ContentPage
     private async void AnimateFill()
     {
         double speed = 80; // px/sec
-        double tileWidth = 250; // largeur d�un motif
+        double tileWidth = 250; // largeur d’un motif
         double position = 0;
 
         var stopwatch = new Stopwatch();
