@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="flashquizz.Pages.Play.CardPlay"
     xmlns:models="clr-namespace:flashquizz.Models"
-    Title="Jouer"
     NavigationPage.HasNavigationBar="False">
 
     <Grid RowDefinitions="80,*">
@@ -30,21 +29,14 @@
                 Clicked="OnBackClicked"/>
         </Grid>
 
-        <!-- contenu de la page -->
-        <Grid Grid.Row="1" >
+        <!-- contenu -->
+        <Grid Grid.Row="1">
             <BoxView Color="Black" />
             <Image Source="bggk1.jfif" Aspect="AspectFill" Opacity="0.7"/>
 
-            <BoxView HeightRequest="200" VerticalOptions="Start">
-                <BoxView.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#FF000000" Offset="0.0" />
-                        <GradientStop Color="Transparent" Offset="1.0" />
-                    </LinearGradientBrush>
-                </BoxView.Background>
-            </BoxView>
-            
             <StackLayout Padding="20" Spacing="20">
+
+                <!-- Titre -->
                 <Label Text="{Binding Title}"
                        FontSize="20"
                        FontAttributes="Bold"
@@ -56,32 +48,89 @@
                         <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
                     </Label.Shadow>
                 </Label>
-            </StackLayout>
 
-            <Grid>
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnCardTapped"/>
-                </Grid.GestureRecognizers>
-
-                <Grid x:Name="CardContainer"
+                <!-- Progress bar fantasy -->
+                <Grid HeightRequest="48"
                       WidthRequest="300"
-                      HeightRequest="450"
-                      HorizontalOptions="Center"
-                      VerticalOptions="Center">
+                      HorizontalOptions="Center">
 
-                    <Image Source="card.png"
-                           Aspect="AspectFit"/>
+                    <!-- Viewport = zone visible -->
+                    <Grid x:Name="ProgressViewport"
+                          Margin="52,0,0,0"
+                          WidthRequest="250"
+                          HeightRequest="23"
+                          IsClippedToBounds="True"
+                          HorizontalOptions="Start"
+                          AnchorX="0">
 
-                    <Label x:Name="CardText"
-                           Text="QUESTION"
-                           TextColor="#FFD700"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center"
-                           Margin="45,0,45,0"/>
+                        <!-- Bande animée -->
+                        <Grid x:Name="FillBand"
+                              WidthRequest="750"
+                              HeightRequest="23">
+
+                            <Image Source="progress_fill.png"
+                                   WidthRequest="250"
+                                   HeightRequest="23"
+                                   Aspect="AspectFit"/>
+
+                            <Image Source="progress_fill.png"
+                                   WidthRequest="250"
+                                   HeightRequest="23"
+                                   Aspect="AspectFit"
+                                   TranslationX="250"/>
+
+                            <Image Source="progress_fill.png"
+                                   WidthRequest="250"
+                                   HeightRequest="23"
+                                   Aspect="AspectFit"
+                                   TranslationX="500"/>
+                        </Grid>
+
+                    </Grid>
+
+                    <!-- Cadre -->
+                    <Image Source="progress_empty.png"
+                           Aspect="Fill"/>
                 </Grid>
-            </Grid>
+
+                <!-- Carte -->
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCardTapped"/>
+                    </Grid.GestureRecognizers>
+
+                    <Grid x:Name="CardContainer"
+                          WidthRequest="300"
+                          HeightRequest="450"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center">
+
+                        <Image Source="card.png" Aspect="AspectFit"/>
+
+                        <Label x:Name="CardText"
+                               Text=""
+                               TextColor="#FFD700"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               Margin="45,0,45,0"/>
+                    </Grid>
+                </Grid>
+
+                <Button Text="Réussi"
+                        Clicked="OnSuccessClicked"
+                        BackgroundColor="#004400"
+                        TextColor="#FFD700"
+                        FontSize="20"
+                        HeightRequest="60"
+                        CornerRadius="8"
+                        BorderColor="#FFD700"
+                        BorderWidth="2"
+                        HorizontalOptions="Center"
+                        Margin="0,10,0,0"/>
+
+            </StackLayout>
         </Grid>
     </Grid>
 </ContentPage>
