@@ -98,7 +98,8 @@
                                     <Label Text="{Binding Question}"
                                            TextColor="#FFD700"
                                            FontSize="20"
-                                           FontAttributes="Bold"/>
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
                                 </Frame>
                             </SwipeView>
                         </DataTemplate>
