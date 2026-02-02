@@ -119,10 +119,16 @@ public partial class CardPlay : ContentPage
             if (_currentCard is null)
                 return;
 
+            // Si la carte n’a jamais été réussie → reste à 0
             if (!_successCount.ContainsKey(_currentCard))
+            {
                 _successCount[_currentCard] = 0;
-
-            _successCount[_currentCard]++;
+            }
+            else
+            {
+                // Si elle a déjà été réussie → on retire 1 (sans descendre sous 0)
+                _successCount[_currentCard] = Math.Max(0, _successCount[_currentCard] - 1);
+            }
 
             LoadNextCard();
         });
@@ -138,8 +144,6 @@ public partial class CardPlay : ContentPage
 
         ProgressViewport.ScaleX = correctedRatio;
     }
-
-
 
     private async void AnimateFill()
     {
