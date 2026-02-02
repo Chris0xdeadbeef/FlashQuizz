@@ -10,8 +10,17 @@ public partial class CardPlay : ContentPage
     private Models.Card? _currentCard;
     private readonly Dictionary<Models.Card, int> _successCount = new();
     private readonly int _connaissanceRequired;
-
-
+    private readonly List<(string front, string back)> _cardImages = new()
+    {
+        ("card1.jpg", "card2.jpg"),
+        ("card3.jpg", "card4.jpg"),
+        ("card5.jpg", "card6.jpg"),
+        ("card7.jpg", "card8.jpg"),
+        ("card9.jpg", "card10.jpg"),
+        ("card11.jpg", "card12.jpg"),
+        ("card13.jpg", "card14.jpg")
+    };
+    private (string front, string back) _currentImages;
     public int TotalCards => _deck.Cards.Count;
     public int SuccessCount { get; set; } = 0;
     public int FailCount { get; set; } = 0;
@@ -58,12 +67,12 @@ public partial class CardPlay : ContentPage
         if (_showingQuestion)
         {
             CardText.Text = _currentCard?.Answer;
-            CardImage.Source = "card2.jpg";
+            CardImage.Source = _currentImages.back;
         }
         else
         {
             CardText.Text = _currentCard?.Question;
-            CardImage.Source = "card1.jpg";
+            CardImage.Source = _currentImages.front;
         }
 
         _showingQuestion = !_showingQuestion;
@@ -80,30 +89,47 @@ public partial class CardPlay : ContentPage
 
     private void LoadNextCard()
     {
-        // Choisir une carte aléatoire dans le deck
         var random = new Random();
+
+        // Choisir une carte aléatoire
         _currentCard = _deck.Cards[random.Next(_deck.Cards.Count)];
 
+        // Choisir un set d’images différent du précédent
+        (string front, string back) newImages;
+        do
+        {
+            newImages = _cardImages[random.Next(_cardImages.Count)];
+        }
+        while (newImages.front == _currentImages.front &&
+               newImages.back == _currentImages.back);
+
+        _currentImages = newImages;
+
+        // Afficher la face avant
         CardText.Text = _currentCard.Question;
+        CardImage.Source = _currentImages.front;
+
         _showingQuestion = true;
 
         UpdateProgress();
     }
 
-
     private void OnSuccessClicked(object sender, EventArgs e)
     {
-        if (_currentCard is null) 
+        if (_currentCard is null)
             return;
 
         if (!_successCount.ContainsKey(_currentCard))
             _successCount[_currentCard] = 0;
 
-        _successCount[_currentCard]++;
+        // ne dépasse jamais _connaissanceRequired
+        _successCount[_currentCard] = Math.Min(
+            _successCount[_currentCard] + 1,
+            _connaissanceRequired
+        );
 
         LoadNextCard();
     }
-
 
     protected override void OnDisappearing()
     {
