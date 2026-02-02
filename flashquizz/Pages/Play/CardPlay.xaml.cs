@@ -6,21 +6,21 @@ public partial class CardPlay : ContentPage
 {
     private readonly Models.Deck _deck;
     private bool _showingQuestion = true;
-
+    private bool _isAnimating = false;
     private Models.Card? _currentCard;
-    private readonly List<Models.Card> _remainingCards;
-    private int _currentIndex = 0;
+    private readonly Dictionary<Models.Card, int> _successCount = new();
+    private readonly int _connaissanceRequired;
+
 
     public int TotalCards => _deck.Cards.Count;
     public int SuccessCount { get; set; } = 0;
     public int FailCount { get; set; } = 0;
 
-    public CardPlay(Models.Deck deck)
+    public CardPlay(Models.Deck deck, int connaissanceRequired)
     {
         InitializeComponent();
         _deck = deck;
-
-        _remainingCards = _deck.Cards.OrderBy(c => Guid.NewGuid()).ToList();
+        _connaissanceRequired = connaissanceRequired;
 
         LoadNextCard();
         UpdateProgress();
@@ -37,17 +37,16 @@ public partial class CardPlay : ContentPage
     {
         if (Navigation.NavigationStack.Count > 1)
             await Navigation.PopAsync();
-    }
-
-    private bool _isAnimating = false;
+    }       
 
     private async void OnCardTapped(object sender, TappedEventArgs e)
     {
         if (_isAnimating) return;
         _isAnimating = true;
+
         CardContainer.AnchorX = 0; // flip autour du côté gauche
-        CardContainer.AnchorY = 0; // flip autour du coin supérieur
         await CardContainer.RotateYTo(90, 200, Easing.SinIn);
+
         // Première moitié du flip
         await Task.WhenAll(
             CardContainer.RotateYTo(90, 200, Easing.SinIn),
@@ -79,33 +78,32 @@ public partial class CardPlay : ContentPage
         _isAnimating = false;
     }
 
-
-
     private void LoadNextCard()
     {
-        if (_currentIndex >= _remainingCards.Count)
-        {
-            DisplayAlert("Terminé",
-                $"Réussi : {SuccessCount}\nRaté : {FailCount}",
-                "OK");
+        // Choisir une carte aléatoire dans le deck
+        var random = new Random();
+        _currentCard = _deck.Cards[random.Next(_deck.Cards.Count)];
 
-            Navigation.PopAsync();
-            return;
-        }
-
-        _currentCard = _remainingCards[_currentIndex];
         CardText.Text = _currentCard.Question;
         _showingQuestion = true;
 
         UpdateProgress();
     }
 
+
     private void OnSuccessClicked(object sender, EventArgs e)
     {
-        SuccessCount++;
-        _currentIndex++;
+        if (_currentCard is null) 
+            return;
+
+        if (!_successCount.ContainsKey(_currentCard))
+            _successCount[_currentCard] = 0;
+
+        _successCount[_currentCard]++;
+
         LoadNextCard();
     }
+
 
     protected override void OnDisappearing()
     {
@@ -118,17 +116,31 @@ public partial class CardPlay : ContentPage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            FailCount++;
-            _currentIndex++;
+            if (_currentCard is null)
+                return;
+
+            if (!_successCount.ContainsKey(_currentCard))
+                _successCount[_currentCard] = 0;
+
+            _successCount[_currentCard]++;
+
             LoadNextCard();
         });
     }
 
     private void UpdateProgress()
     {
-        double ratio = Math.Clamp((double)_currentIndex / TotalCards, 0, 1);
-        ProgressViewport.ScaleX = ratio;
+        int mastered = _successCount.Values.Count(v => v >= _connaissanceRequired);
+        double ratio = (double)mastered / TotalCards;
+
+        // Compense la marge visuelle de 52px
+        double correctedRatio = ratio * ((250.0 - 52.0) / 250.0);
+
+        ProgressViewport.ScaleX = correctedRatio;
     }
+
+
+
     private async void AnimateFill()
     {
         double speed = 80; // px/sec

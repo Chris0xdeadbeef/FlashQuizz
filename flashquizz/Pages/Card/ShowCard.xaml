@@ -48,7 +48,7 @@
                             <Shadow Brush="#000000" Opacity="0.9" Offset="3,3" Radius="6"/>
                         </Label.Shadow>
                     </Label>
-
+                    
                     <Button
                          x:Name="CardAddBtn"
                          Text="+"

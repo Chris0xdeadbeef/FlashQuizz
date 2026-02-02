@@ -10,7 +10,8 @@ public partial class DeckChoice : ContentPage
     /// <summary>
     /// Liste observable des decks disponibles pour le mode "Play".
     /// </summary>
-    public ObservableCollection<Models.Deck> Decks => _deckService.Decks;   
+    public ObservableCollection<Models.Deck> Decks => _deckService.Decks;
+    public bool IsConnaissanceZero => string.IsNullOrWhiteSpace(Connaissance.Text) || Connaissance.Text == "0";
 
 
     /// <summary>
@@ -23,6 +24,10 @@ public partial class DeckChoice : ContentPage
         BindingContext = this;
 
         InitializeComponent();
+        Connaissance.EntryControl.TextChanged += (s, e) =>
+        {
+            OnPropertyChanged(nameof(IsConnaissanceZero));
+        };
     }
 
     /// <summary>
@@ -41,17 +46,31 @@ public partial class DeckChoice : ContentPage
     {
         if (e.CurrentSelection.FirstOrDefault() is Models.Deck deck)
         {
-            // deck vide → on annule la sélection et on ne fait rien
+            // 1) Vérifier que Connaissance est renseigné
+            if (!int.TryParse(Connaissance.Text, out int connaissance) || connaissance <= 0)
+            {
+                DisplayAlert("Erreur", "Veuillez entrer un nombre valide dans le champ Connaissance.", "OK");
+                ((CollectionView)sender).SelectedItem = null;
+                return;
+            }
+
+            // 2) Vérifier que le deck n'est pas vide
             if (deck.Cards.Count == 0)
             {
                 ((CollectionView)sender).SelectedItem = null;
                 return;
             }
 
-            // deck valide → navigation
-            Navigation.PushAsync(new CardPlay(deck));
+            // 3) Navigation OK
+            Navigation.PushAsync(new CardPlay(deck, connaissance));
         }
+
         ((CollectionView)sender).SelectedItem = null;
     }
 
+
+    private void OnBackgroundTapped(object sender, TappedEventArgs e)
+    {
+        Connaissance.EntryControl.Unfocus();
+    }
 }
