@@ -18,7 +18,10 @@ public partial class CardPlay : ContentPage
         ("card7.jpg", "card8.jpg"),
         ("card9.jpg", "card10.jpg"),
         ("card11.jpg", "card12.jpg"),
-        ("card13.jpg", "card14.jpg")
+        ("card13.jpg", "card14.jpg"),
+        ("card15.jpg", "card16.jpg"),
+        ("card17.jpg", "card18.jpg"),
+        ("card19.jpg", "card20.jpg")
     };
     private (string front, string back) _currentImages;
     public int TotalCards => _deck.Cards.Count;
