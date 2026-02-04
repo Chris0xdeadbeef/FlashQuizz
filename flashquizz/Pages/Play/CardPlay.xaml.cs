@@ -4,14 +4,15 @@ namespace flashquizz.Pages.Play;
 
 public partial class CardPlay : ContentPage
 {
+    private readonly Stopwatch _timer = new();
     private readonly Models.Deck _deck;
     private bool _showingQuestion = true;
     private bool _isAnimating = false;
     private Models.Card? _currentCard;
-    private readonly Dictionary<Models.Card, int> _successCount = new();
+    private readonly Dictionary<Models.Card, int> _successCount = [];
     private readonly int _connaissanceRequired;
-    private readonly List<(string front, string back)> _cardImages = new()
-    {
+    private readonly List<(string front, string back)> _cardImages =
+    [
         ("card1.jpg", "card2.jpg"),
         ("card3.jpg", "card4.jpg"),
         ("card5.jpg", "card6.jpg"),
@@ -22,7 +23,7 @@ public partial class CardPlay : ContentPage
         ("card15.jpg", "card16.jpg"),
         ("card17.jpg", "card18.jpg"),
         ("card19.jpg", "card20.jpg")
-    };
+    ];
     private (string front, string back) _currentImages;
     public int TotalCards => _deck.Cards.Count;
     public int SuccessCount { get; set; } = 0;
@@ -31,8 +32,10 @@ public partial class CardPlay : ContentPage
     public CardPlay(Models.Deck deck, int connaissanceRequired)
     {
         InitializeComponent();
+
         _deck = deck;
         _connaissanceRequired = connaissanceRequired;
+        _timer.Start();
 
         LoadNextCard();
         UpdateProgress();
@@ -47,9 +50,10 @@ public partial class CardPlay : ContentPage
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        if (Navigation.NavigationStack.Count > 1)
-            await Navigation.PopAsync();
-    }       
+        _timer.Stop();
+        await Navigation.PushAsync(new EndGameStats(_deck, _successCount, _timer.Elapsed, _connaissanceRequired));
+    }
+
 
     private async void OnCardTapped(object sender, TappedEventArgs e)
     {
@@ -131,6 +135,8 @@ public partial class CardPlay : ContentPage
             _connaissanceRequired
         );
 
+        CheckIfGameFinished();
+
         LoadNextCard();
     }
 
@@ -158,6 +164,8 @@ public partial class CardPlay : ContentPage
                 // Si elle a déjà été réussie → on retire 1 (sans descendre sous 0)
                 _successCount[_currentCard] = Math.Max(0, _successCount[_currentCard] - 1);
             }
+
+            CheckIfGameFinished();
 
             LoadNextCard();
         });
@@ -203,6 +211,17 @@ public partial class CardPlay : ContentPage
     {
         base.OnAppearing();
         AnimateFill();
+    }
+
+    private async void CheckIfGameFinished()
+    {
+        int mastered = _successCount.Values.Count(v => v >= _connaissanceRequired);
+
+        if (mastered == TotalCards)
+        {
+            _timer.Stop();
+            await Navigation.PushAsync(new EndGameStats(_deck, _successCount, _timer.Elapsed, _connaissanceRequired));
+        }
     }
 
 

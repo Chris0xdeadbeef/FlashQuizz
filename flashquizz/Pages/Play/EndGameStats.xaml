@@ -2,11 +2,64 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="flashquizz.Pages.Play.EndGameStats"
-             Title="EndGameStats">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="80,*">
+        <!-- nav custom -->
+        <Grid Grid.Row="0" HeightRequest="80">
+
+            <BoxView Color="Black" />
+            <Image Source="navd.png" Aspect="AspectFit" HeightRequest="80"/>
+
+            <ImageButton
+                    Source="backarrow.png"
+                    HeightRequest="80"
+                    WidthRequest="80"
+                    Margin="8,0"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Clicked="OnBackClicked"/>
+        </Grid>
+
+        <!-- contenu -->
+        <Grid Grid.Row="1">
+            <BoxView Color="Black" />
+            <Image x:Name="BackgroundImage" Aspect="AspectFill" Opacity="0.7"/>
+
+            <BoxView HeightRequest="200" VerticalOptions="Start" InputTransparent="True">
+                <BoxView.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#FF000000" Offset="0.0" />
+                        <GradientStop Color="#00000000" Offset="1.0" />
+                    </LinearGradientBrush>
+                </BoxView.Background>
+            </BoxView>
+            
+            <StackLayout Padding="10" Spacing="20">
+
+                <Label Text="Statistiques"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#FFD700"
+                       FontFamily="OrbitronBold"/>
+
+                <!-- Temps passé -->
+                <Label Text="Temps total :" FontSize="18" TextColor="White" HorizontalTextAlignment="Center"/>
+                <Label x:Name="TimeSpentLabel" FontSize="22" TextColor="#FFD700" HorizontalTextAlignment="Center"/>
+
+                <!-- Carte la plus difficile -->
+                <Label Text="Carte la plus difficile :" FontSize="18" TextColor="White" HorizontalTextAlignment="Center"/>
+                <Label x:Name="HardestCardLabel" FontSize="22" TextColor="#FF5555" HorizontalTextAlignment="Center"/>
+
+                <!-- Nombre de cartes maîtrisées -->
+                <Label Text="Cartes maîtrisées :" FontSize="18" TextColor="White" HorizontalTextAlignment="Center"/>
+                <Label x:Name="MasteredCountLabel" FontSize="22" TextColor="#4CAF50" HorizontalTextAlignment="Center"/>
+
+                <!-- Pourcentage de mémorisation -->
+                <Label Text="Pourcentage de mémorisation :" FontSize="18" TextColor="White" HorizontalTextAlignment="Center"/>
+                <Label x:Name="MemorizationPercentLabel" FontSize="22" TextColor="#FFD700" HorizontalTextAlignment="Center"/>
+            </StackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>
