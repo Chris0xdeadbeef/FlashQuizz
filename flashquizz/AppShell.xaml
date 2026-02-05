@@ -7,7 +7,6 @@
     xmlns:card="clr-namespace:flashquizz.Pages.Card"
     xmlns:pages="clr-namespace:flashquizz.Pages"
     Shell.FlyoutBehavior="Disabled"
-    Title="flashquizz"
     Shell.NavBarIsVisible="False">
 
     <!-- pages du shell -->
