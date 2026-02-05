@@ -3,21 +3,44 @@ using System.Collections.ObjectModel;
 
 namespace flashquizz.Services;
 
+/// <summary>
+/// Service centralisé responsable de la gestion des decks et des cartes.
+/// Il agit comme une source de vérité unique pour toute l'application.
+/// </summary>
 public class DeckService
 {
+    /// <summary>
+    /// Liste observable contenant tous les decks de l'application.
+    /// ObservableCollection permet une mise à jour automatique de l'UI.
+    /// </summary>
     public ObservableCollection<Deck> Decks { get; private set; } = [];
+
+    /// <summary>
+    /// Ajoute un nouveau deck à la collection globale.
+    /// </summary>
+    /// <param name="deck">Deck à ajouter.</param>
     public void AddDeck(Deck deck)
     {
         Decks.Add(deck);
     }
+
+    /// <summary>
+    /// Ajoute une carte à un deck donné.
+    /// </summary>
+    /// <param name="deck">Deck dans lequel ajouter la carte.</param>
+    /// <param name="card">Carte à ajouter.</param>
     public void AddCard(Deck deck, Card card)
     {
         deck.Cards.Add(card);
     }
 
+    /// <summary>
+    /// Constructeur du service.
+    /// Initialise la collection des decks.
+    /// </summary>
     public DeckService()
     {
-        // Deck 1 : Space Marines (5 cartes)
+        // (Seeders) sets de decks et cards généré par défaut
         Decks.Add(new Deck
         {
             Title = "Space Marines – Initiation",
@@ -31,7 +54,6 @@ public class DeckService
             }
         });
 
-        // Deck 2 : Orks (10 cartes)
         Decks.Add(new Deck
         {
             Title = "Orks – Waaagh! Avancée",

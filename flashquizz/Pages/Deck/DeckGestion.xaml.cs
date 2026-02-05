@@ -4,12 +4,22 @@ using System.Collections.ObjectModel;
 
 namespace flashquizz.Pages.Deck;
 
+/// <summary>
+/// Page permettant de gérer les decks : affichage, ajout, suppression
+/// et navigation vers les cartes d’un deck.
+/// </summary>
 public partial class DeckGestion : ContentPage
 {
     private readonly DeckService _deckService;
     private readonly DeckAdd _deckAdd;
+
+    // Indique si un swipe est en cours pour éviter les conflits avec la sélection
     private bool _isSwiping = false;
 
+    /// <summary>
+    /// Classe statique utilisée pour stocker temporairement un deck sélectionné.
+    /// (Actuellement non utilisée mais laissée pour compatibilité.)
+    /// </summary>
     public static class DeckNavigation
     {
         public static Models.Deck? SelectedDeck { get; set; }
@@ -21,8 +31,11 @@ public partial class DeckGestion : ContentPage
     public ObservableCollection<Models.Deck> Decks => _deckService.Decks;
 
     /// <summary>
-    /// Initialise la page de gestion des decks.
+    /// Constructeur principal.
+    /// Initialise la page de gestion des decks et configure le BindingContext.
     /// </summary>
+    /// <param name="deckAdd">Page d’ajout de deck (réutilisée pour éviter de recréer l’écran).</param>
+    /// <param name="deckService">Service global de gestion des decks.</param>
     public DeckGestion(DeckAdd deckAdd, DeckService deckService)
     {
         _deckAdd = deckAdd;
@@ -43,7 +56,7 @@ public partial class DeckGestion : ContentPage
     }
 
     /// <summary>
-    /// Ouvre la page permettant d'ajouter un nouveau deck.
+    /// Ouvre la page permettant d’ajouter un nouveau deck.
     /// </summary>
     private async void OnClickedAddDeck(object sender, EventArgs e)
     {
@@ -51,7 +64,8 @@ public partial class DeckGestion : ContentPage
     }
 
     /// <summary>
-    /// Ouvre la page des cartes du deck sélectionné, sauf si un swipe est en cours.
+    /// Ouvre la page des cartes du deck sélectionné.
+    /// Ne fonctionne pas si un swipe est en cours pour éviter les conflits.
     /// </summary>
     private async void OnDeckSelected(object sender, SelectionChangedEventArgs e)
     {
@@ -70,12 +84,14 @@ public partial class DeckGestion : ContentPage
                 )
             );
         }
+
         // Désélectionne l’item pour éviter qu’il reste surligné
         ((CollectionView)sender).SelectedItem = null;
     }
 
     /// <summary>
-    /// Supprime le deck sélectionné après confirmation de l'utilisateur.
+    /// Supprime un deck après confirmation de l’utilisateur.
+    /// Appelé depuis un SwipeItem.
     /// </summary>
     private async void OnDeleteDeck(object sender, EventArgs e)
     {
@@ -98,7 +114,8 @@ public partial class DeckGestion : ContentPage
     }
 
     /// <summary>
-    /// Désactive la sélection lorsque l'utilisateur commence un swipe.
+    /// Désactive la sélection lorsqu’un swipe commence.
+    /// Empêche la sélection accidentelle d’un deck pendant un geste horizontal.
     /// </summary>
     private void OnSwipeStarted(object sender, SwipeStartedEventArgs e)
     {

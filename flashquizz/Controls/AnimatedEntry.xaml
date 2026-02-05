@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+    AnimatedEntry :
+    Contrôle personnalisé composé d’un Entry et d’un soulignement animé.
+    Le soulignement s’élargit lorsque le champ reçoit le focus,
+    et se rétrécit lorsqu’il le perd.
+-->
+
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="flashquizz.Controls.AnimatedEntry"
              x:Name="This">
 
+    <!--
+        Layout principal : une pile verticale contenant :
+        1) L'Entry (champ de texte)
+        2) Le soulignement animé (BoxView)
+    -->
     <VerticalStackLayout Spacing="0">
 
+        <!--
+            Entry principal :
+            - Lie son texte et son placeholder aux propriétés du contrôle
+            - Déclenche les animations OnFocused / OnUnfocused
+        -->
         <Entry x:Name="InnerEntry"
                Text="{Binding Text, Source={x:Reference This}}"
                Placeholder="{Binding Placeholder, Source={x:Reference This}}"
@@ -16,10 +33,14 @@
                Focused="OnFocused"
                Unfocused="OnUnfocused"/>
 
+        <!--
+            Soulignement animé :
+            - Largeur modifiée par les animations dans le code-behind
+            - Couleur dorée (#FFD700)
+        -->
         <BoxView x:Name="Underline"
                  HeightRequest="2"
                  BackgroundColor="#FFD700"
                  WidthRequest="100"/>
     </VerticalStackLayout>
 </ContentView>
-

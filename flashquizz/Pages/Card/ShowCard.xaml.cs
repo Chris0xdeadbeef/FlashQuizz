@@ -2,18 +2,28 @@ using flashquizz.Services;
 
 namespace flashquizz.Pages.Card;
 
+/// <summary>
+/// Page permettant d'afficher toutes les cartes d'un deck.
+/// Permet également d'ajouter, modifier ou supprimer une carte.
+/// </summary>
 public partial class ShowCard : ContentPage
 {
     private readonly Models.Deck _deck;
     private readonly DeckService _deckService;
+
+    // Indique si un swipe est en cours pour éviter les conflits avec la sélection
     private bool _isSwiping = false;
 
     /// <summary>
+    /// Constructeur principal.
     /// Initialise la page d'affichage des cartes d'un deck.
+    /// Récupère le DeckService depuis la page AddCard (injection indirecte).
     /// </summary>
+    /// <param name="addCard">Page AddCard utilisée pour récupérer le DeckService.</param>
+    /// <param name="deck">Deck dont les cartes doivent être affichées.</param>
     public ShowCard(AddCard addCard, Models.Deck deck)
     {
-        // On récupère le service depuis addCard
+        // Récupération du DeckService via réflexion (car AddCard le possède déjà)
         _deckService = addCard.GetType()
                               .GetField("_deckService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                               ?.GetValue(addCard) as DeckService
@@ -21,16 +31,21 @@ public partial class ShowCard : ContentPage
 
         _deck = deck;
 
+        // Le BindingContext est le deck lui-même (utile pour le XAML)
         BindingContext = _deck;
 
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Rafraîchit la liste des cartes à chaque apparition de la page.
+    /// Permet de refléter les modifications faites dans AddCard.
+    /// </summary>
     protected override void OnAppearing()
     {
         base.OnAppearing();
 
-        // Force le rafraîchissement de la liste
+        // Force le rafraîchissement de la CollectionView
         CardCollection.ItemsSource = null;
         CardCollection.ItemsSource = _deck.Cards;
     }
@@ -53,7 +68,8 @@ public partial class ShowCard : ContentPage
     }
 
     /// <summary>
-    /// Désactive la sélection lorsque l'utilisateur commence un swipe.
+    /// Déclenché lorsque l'utilisateur commence un swipe.
+    /// Désactive temporairement la sélection pour éviter les conflits.
     /// </summary>
     private void OnSwipeStarted(object sender, SwipeStartedEventArgs e)
     {
@@ -72,8 +88,8 @@ public partial class ShowCard : ContentPage
     }
 
     /// <summary>
-    /// Gère la sélection d'une carte, sauf si un swipe est en cours.
-    /// Ouvre la page AddCard en mode modification.
+    /// Gère la sélection d'une carte.
+    /// Si aucun swipe n'est en cours, ouvre la page AddCard en mode édition.
     /// </summary>
     private async void OnCardSelected(object sender, SelectionChangedEventArgs e)
     {
@@ -90,12 +106,13 @@ public partial class ShowCard : ContentPage
             );
         }
 
+        // Réinitialise la sélection visuelle
         ((CollectionView)sender).SelectedItem = null;
     }
 
-
     /// <summary>
-    /// Supprime la carte sélectionnée après confirmation de l'utilisateur.
+    /// Supprime une carte après confirmation de l'utilisateur.
+    /// Appelé depuis un SwipeItem.
     /// </summary>
     private async void OnDeleteCard(object sender, EventArgs e)
     {
